@@ -48,7 +48,6 @@ export default defineType({
         list: [
           { title: 'Website', value: 'website' },
           { title: 'Web App', value: 'webapp' },
-          { title: 'Desktop App (Electron)', value: 'electron' },
           { title: 'Mobile App', value: 'mobile' },
           { title: 'Other', value: 'other' },
         ],

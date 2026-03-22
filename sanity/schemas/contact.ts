@@ -37,6 +37,7 @@ export const siteSettingsSchema = defineType({
     defineField({ name: 'siteNameFr', title: 'Site Name (French)', type: 'string' }),
     defineField({ name: 'siteNameEn', title: 'Site Name (English)', type: 'string' }),
     defineField({ name: 'logo', title: 'Logo', type: 'image' }),
+    defineField({ name: 'favicon', title: 'Favicon', type: 'image' }),
   ],
   preview: { prepare: () => ({ title: 'Site Settings' }) },
 });

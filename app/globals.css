@@ -3,11 +3,15 @@
 @tailwind utilities;
 
 :root {
-  --beige: #fdf8f0;
-  --beige-2: #f2d9ac;
-  --black: #0a0a0a;
+  --background: #ffffff;
+  --text: #000000;
+  --accent: #bfac8e;
+  --card: #bfac8e;
+  --button: #bfac8e;
+  --black: #000000;
   --white: #ffffff;
-  --accent: #c8883a;
+  --beige: #ffffff;
+  --beige-2: #bfac8e;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }

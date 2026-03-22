@@ -1,32 +1,37 @@
 import Link from 'next/link';
+import Image from 'next/image';
+import { dictionary } from '@/lib/dictionary';
 
-export default function Footer() {
+export default function Footer({ lang = 'ar', logoUrl }: { lang?: 'ar' | 'en' | 'fr', logoUrl: string }) {
+  const t = dictionary;
+
   return (
-    <footer className="bg-[#0a0a0a] text-[#fdf8f0] py-16 px-6">
+    <footer className="bg-white text-black py-16 px-6 border-t border-gray-100">
       <div className="max-w-6xl mx-auto">
         <div className="grid md:grid-cols-3 gap-10 mb-12">
           {/* Brand */}
           <div>
-            <Link href="/" className="font-display text-2xl font-bold mb-4 inline-block">
-              Nedjem<span className="text-[#c8883a]">.</span>
+            <Link href="/" className="relative flex items-center w-[100px] mb-4">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={logoUrl} alt="Nedjem Eddine" className="w-full h-auto object-contain object-right" />
             </Link>
-            <p className="text-[#888] text-sm leading-relaxed mt-3">
-              مطور مواقع وتطبيقات ويب وإلكترون، أسعى لبناء حلول رقمية احترافية.
+            <p className="text-black/60 text-sm leading-relaxed mt-3">
+              {t.developer[lang]}, {t.bioFallback[lang]}
             </p>
           </div>
 
           {/* Links */}
           <div>
-            <h4 className="font-semibold mb-4 text-sm tracking-widest uppercase text-[#aaa]">الصفحات</h4>
+            <h4 className="font-semibold mb-4 text-sm tracking-widest uppercase text-black/40">{t.pages[lang]}</h4>
             <ul className="space-y-2">
               {[
-                { href: '/',         label: 'الرئيسية' },
-                { href: '/projects', label: 'المشاريع' },
-                { href: '/about',    label: 'حول'      },
-                { href: '/contact',  label: 'تواصل'    },
+                { href: '/',         label: t.home[lang] },
+                { href: '/projects', label: t.projects[lang] },
+                { href: '/about',    label: t.about[lang]      },
+                { href: '/contact',  label: t.contact[lang]    },
               ].map((link) => (
                 <li key={link.href}>
-                  <Link href={link.href} className="text-[#888] hover:text-[#c8883a] transition-colors text-sm">
+                  <Link href={link.href} className="text-black/60 hover:text-[#bfac8e] transition-colors text-sm">
                     {link.label}
                   </Link>
                 </li>
@@ -36,10 +41,10 @@ export default function Footer() {
 
           {/* Tech */}
           <div>
-            <h4 className="font-semibold mb-4 text-sm tracking-widest uppercase text-[#aaa]">التقنيات</h4>
+            <h4 className="font-semibold mb-4 text-sm tracking-widest uppercase text-black/40">{t.technologies[lang]}</h4>
             <div className="flex flex-wrap gap-2">
-              {['Next.js', 'React', 'TypeScript', 'Electron', 'Sanity CMS', 'Tailwind'].map((tech) => (
-                <span key={tech} className="text-xs border border-[#333] text-[#888] px-2 py-1 rounded-full">
+              {['Next.js', 'React', 'TypeScript', 'Sanity CMS', 'Tailwind'].map((tech) => (
+                <span key={tech} className="text-xs border border-gray-200 text-black/60 px-2 py-1 rounded-full">
                   {tech}
                 </span>
               ))}
@@ -47,16 +52,10 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-[#222] pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-[#666] text-sm">
-            © {new Date().getFullYear()} Nedjem Eddine. جميع الحقوق محفوظة.
+        <div className="border-t border-gray-100 pt-8 flex justify-center text-center">
+          <p className="text-black/40 text-sm">
+            © {new Date().getFullYear()} Nedjem Eddine. {t.rights[lang]}
           </p>
-          <Link
-            href="/studio"
-            className="text-xs text-[#555] hover:text-[#c8883a] transition-colors"
-          >
-            لوحة التحكم ↗
-          </Link>
         </div>
       </div>
     </footer>

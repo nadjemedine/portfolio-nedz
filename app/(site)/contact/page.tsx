@@ -2,7 +2,15 @@ import { getContactData } from "@/lib/queries";
 
 export const revalidate = 60;
 
+import { cookies } from "next/headers";
+import { dictionary } from "@/lib/dictionary";
+import ContactFormModal from "@/components/ContactFormModal";
+
 export default async function ContactPage() {
+  const cookieStore = cookies();
+  const lang = (cookieStore.get("NEXT_LOCALE")?.value || "ar") as "ar" | "en" | "fr";
+  const t = dictionary;
+
   const contact = (await getContactData().catch(() => null)) as any;
 
   return (
@@ -10,9 +18,9 @@ export default async function ContactPage() {
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="text-center mb-16">
-          <h1 className="font-display text-5xl md:text-6xl font-bold mb-4">تواصل معي</h1>
-          <p className="text-[#666] text-lg max-w-xl mx-auto">
-            أنا متاح للمشاريع الجديدة، الاستشارات التقنية، والفرص المهنية
+          <h1 className="font-display text-5xl md:text-6xl font-bold mb-4">{t.contactHeaderTitle[lang]}</h1>
+          <p className="text-black/60 text-lg max-w-xl mx-auto">
+            {t.contactHeaderSubtitle[lang]}
           </p>
         </div>
 
@@ -22,7 +30,7 @@ export default async function ContactPage() {
             <div className="bg-green-50 border border-green-200 rounded-full px-6 py-3 flex items-center gap-3">
               <span className="inline-block w-2.5 h-2.5 bg-green-500 rounded-full animate-pulse" />
               <span className="text-green-700 font-medium text-sm">
-                متاح حالياً للمشاريع الجديدة
+                {t.availableForNewProjects[lang]}
               </span>
             </div>
           </div>
@@ -33,11 +41,11 @@ export default async function ContactPage() {
           {contact?.email && (
             <a
               href={`mailto:${contact.email}`}
-              className="bg-white p-8 rounded-2xl border border-[#f2d9ac] hover:shadow-xl transition-all hover:-translate-y-1 text-center group"
+              className="bg-[#bfac8e] p-8 rounded-2xl border border-[#bfac8e] hover:shadow-xl transition-all hover:-translate-y-1 text-center group text-black"
             >
               <div className="text-4xl mb-5">✉️</div>
-              <div className="font-semibold text-lg mb-2">البريد الإلكتروني</div>
-              <div className="text-[#c8883a] text-sm group-hover:underline break-all">
+              <div className="font-semibold text-lg mb-2">{t.email[lang]}</div>
+              <div className="text-black/70 text-sm group-hover:underline break-all">
                 {contact.email}
               </div>
             </a>
@@ -46,11 +54,11 @@ export default async function ContactPage() {
           {contact?.phone && (
             <a
               href={`tel:${contact.phone}`}
-              className="bg-white p-8 rounded-2xl border border-[#f2d9ac] hover:shadow-xl transition-all hover:-translate-y-1 text-center group"
+              className="bg-[#bfac8e] p-8 rounded-2xl border border-[#bfac8e] hover:shadow-xl transition-all hover:-translate-y-1 text-center group text-black"
             >
               <div className="text-4xl mb-5">📞</div>
-              <div className="font-semibold text-lg mb-2">الهاتف</div>
-              <div className="text-[#c8883a] text-sm">{contact.phone}</div>
+              <div className="font-semibold text-lg mb-2">{lang === 'ar' ? 'الهاتف' : 'Phone'}</div>
+              <div className="text-black/70 text-sm">{contact.phone}</div>
             </a>
           )}
 
@@ -59,12 +67,12 @@ export default async function ContactPage() {
               href={contact.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-white p-8 rounded-2xl border border-[#f2d9ac] hover:shadow-xl transition-all hover:-translate-y-1 text-center group"
+              className="bg-[#bfac8e] p-8 rounded-2xl border border-[#bfac8e] hover:shadow-xl transition-all hover:-translate-y-1 text-center group text-black"
             >
               <div className="text-4xl mb-5">💻</div>
               <div className="font-semibold text-lg mb-2">GitHub</div>
-              <div className="text-[#c8883a] text-sm group-hover:underline">
-                عرض مشاريعي البرمجية
+              <div className="text-black/70 text-sm group-hover:underline">
+                {t.myProjects[lang]}
               </div>
             </a>
           )}
@@ -74,58 +82,31 @@ export default async function ContactPage() {
               href={contact.linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-white p-8 rounded-2xl border border-[#f2d9ac] hover:shadow-xl transition-all hover:-translate-y-1 text-center group"
+              className="bg-[#bfac8e] p-8 rounded-2xl border border-[#bfac8e] hover:shadow-xl transition-all hover:-translate-y-1 text-center group text-black"
             >
               <div className="text-4xl mb-5">💼</div>
               <div className="font-semibold text-lg mb-2">LinkedIn</div>
-              <div className="text-[#c8883a] text-sm group-hover:underline">
-                تواصل مهني
+              <div className="text-black/70 text-sm group-hover:underline">
+                {t.socials[lang]}
               </div>
             </a>
-          )}
-
-          {/* Fallbacks if no Sanity data */}
-          {!contact?.email && !contact?.phone && !contact?.github && !contact?.linkedin && (
-            <>
-              <div className="bg-white p-8 rounded-2xl border border-[#f2d9ac] text-center">
-                <div className="text-4xl mb-5">✉️</div>
-                <div className="font-semibold text-lg mb-2">البريد الإلكتروني</div>
-                <div className="text-[#aaa] text-sm">أضف بريدك عبر لوحة التحكم</div>
-              </div>
-              <div className="bg-white p-8 rounded-2xl border border-[#f2d9ac] text-center">
-                <div className="text-4xl mb-5">💻</div>
-                <div className="font-semibold text-lg mb-2">GitHub</div>
-                <div className="text-[#aaa] text-sm">أضف رابط GitHub عبر لوحة التحكم</div>
-              </div>
-            </>
           )}
         </div>
 
         {/* CTA Box */}
-        <div className="bg-[#0a0a0a] text-[#fdf8f0] rounded-3xl p-12 text-center">
+        <div className="bg-[#bfac8e] text-black rounded-3xl p-12 text-center">
           <h2 className="font-display text-3xl font-bold mb-4">
-            لديك مشروع تريد تنفيذه؟
+            {t.contactCardSubtitle[lang]}
           </h2>
-          <p className="text-[#aaa] mb-8 max-w-lg mx-auto">
-            أرسل لي رسالة عبر البريد الإلكتروني وسأرد عليك في أقرب وقت ممكن.
+          <p className="text-black/60 mb-8 max-w-lg mx-auto">
+            {t.translateIdea[lang]}
           </p>
-          {contact?.email ? (
-            <a
-              href={`mailto:${contact.email}?subject=طلب مشروع جديد`}
-              className="bg-[#c8883a] text-white px-10 py-3.5 rounded-full font-semibold hover:bg-[#b5762e] transition-colors inline-block"
-            >
-              أرسل رسالة الآن
-            </a>
-          ) : (
-            <span className="bg-[#c8883a] text-white px-10 py-3.5 rounded-full font-semibold">
-              أرسل رسالة الآن
-            </span>
-          )}
+          <ContactFormModal lang={lang} />
         </div>
 
         {/* Location */}
         {contact?.location && (
-          <div className="text-center mt-10 text-[#999] text-sm">
+          <div className="text-center mt-10 text-black/40 text-sm">
             📍 {contact.location}
           </div>
         )}

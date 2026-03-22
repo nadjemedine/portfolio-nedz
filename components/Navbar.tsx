@@ -1,6 +1,7 @@
 'use client';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import Image from 'next/image';
+import { usePathname, useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 type Lang = 'ar' | 'fr' | 'en';
@@ -12,20 +13,29 @@ const navLinks = [
   { href: '/contact',  ar: 'تواصل',    fr: 'Contact',   en: 'Contact'  },
 ];
 
-export default function Navbar() {
+export default function Navbar({ initialLang = 'ar', logoUrl }: { initialLang?: string, logoUrl: string }) {
   const pathname = usePathname();
-  const [lang, setLang] = useState<Lang>('ar');
+  const router = useRouter();
+  const [lang, setLangState] = useState<Lang>(initialLang as Lang);
+
+  const setLang = (l: Lang) => {
+    setLangState(l);
+    document.cookie = `NEXT_LOCALE=${l}; path=/; max-age=31536000`;
+    router.refresh();
+  };
+
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const isActive = (href: string) =>
     href === '/' ? pathname === '/' : pathname.startsWith(href);
 
   return (
-    <nav className="fixed top-0 w-full z-50 bg-[#fdf8f0]/95 backdrop-blur-sm border-b border-[#f2d9ac]">
-      <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+    <nav className="fixed top-0 w-full z-50 bg-white/95 backdrop-blur-sm border-b border-[#bfac8e]">
+      <div className="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
         {/* Logo */}
-        <Link href="/" className="font-display text-2xl font-bold tracking-tight">
-          Nedjem<span className="text-[#c8883a]">.</span>
+        <Link href="/" className="relative flex items-center w-[100px]">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={logoUrl} alt="Nedjem Eddine" className="w-full h-auto object-contain" />
         </Link>
 
         {/* Desktop Nav */}
@@ -35,12 +45,12 @@ export default function Navbar() {
               key={link.href}
               href={link.href}
               className={`text-sm font-medium transition-colors relative group ${
-                isActive(link.href) ? 'text-[#c8883a]' : 'text-[#0a0a0a] hover:text-[#c8883a]'
+                isActive(link.href) ? 'text-[#bfac8e]' : 'text-black hover:text-[#bfac8e]'
               }`}
             >
               {link[lang]}
               {isActive(link.href) && (
-                <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-[#c8883a] rounded-full" />
+                <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-[#bfac8e] rounded-full" />
               )}
             </Link>
           ))}
@@ -48,15 +58,15 @@ export default function Navbar() {
 
         {/* Language Switcher */}
         <div className="hidden md:flex items-center gap-2">
-          <div className="flex border border-[#0a0a0a]/20 rounded-full overflow-hidden">
+          <div className="flex border border-black/20 rounded-full overflow-hidden">
             {(['ar', 'fr', 'en'] as Lang[]).map((l) => (
               <button
                 key={l}
                 onClick={() => setLang(l)}
                 className={`px-3 py-1.5 text-xs font-semibold transition-colors ${
                   lang === l
-                    ? 'bg-[#0a0a0a] text-[#fdf8f0]'
-                    : 'text-[#0a0a0a] hover:bg-[#f2d9ac]'
+                    ? 'bg-[#bfac8e] text-black'
+                    : 'text-black hover:bg-[#bfac8e]'
                 }`}
               >
                 {l.toUpperCase()}
@@ -77,26 +87,26 @@ export default function Navbar() {
 
       {/* Mobile Menu */}
       {mobileOpen && (
-        <div className="md:hidden bg-[#fdf8f0] border-t border-[#f2d9ac] px-6 py-4 space-y-4">
+        <div className="md:hidden bg-white border-t border-[#bfac8e] px-6 py-4 space-y-4">
           {navLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
               onClick={() => setMobileOpen(false)}
               className={`block text-sm font-medium py-2 transition-colors ${
-                isActive(link.href) ? 'text-[#c8883a]' : 'text-[#0a0a0a]'
+                isActive(link.href) ? 'text-[#bfac8e]' : 'text-black'
               }`}
             >
               {link[lang]}
             </Link>
           ))}
-          <div className="flex border border-[#0a0a0a]/20 rounded-full overflow-hidden w-fit mt-4">
+          <div className="flex border border-black/20 rounded-full overflow-hidden w-fit mt-4">
             {(['ar', 'fr', 'en'] as Lang[]).map((l) => (
               <button
                 key={l}
                 onClick={() => setLang(l)}
                 className={`px-3 py-1.5 text-xs font-semibold transition-colors ${
-                  lang === l ? 'bg-[#0a0a0a] text-[#fdf8f0]' : 'hover:bg-[#f2d9ac]'
+                  lang === l ? 'bg-[#bfac8e] text-black' : 'hover:bg-[#bfac8e]'
                 }`}
               >
                 {l.toUpperCase()}

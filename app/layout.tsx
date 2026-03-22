@@ -1,31 +1,54 @@
 import type { Metadata } from "next";
-import { Playfair_Display, IBM_Plex_Sans_Arabic } from "next/font/google";
+import { Amiri } from "next/font/google";
 import "./globals.css";
 
-const playfair = Playfair_Display({
-  subsets: ["latin"],
-  variable: "--font-display",
-});
-const ibmPlexArabic = IBM_Plex_Sans_Arabic({
-  subsets: ["arabic"],
-  weight: ["300", "400", "500", "700"],
+const amiri = Amiri({
+  subsets: ["arabic", "latin"],
+  weight: ["400", "700"],
   variable: "--font-body",
 });
+const amiriDisplay = Amiri({
+  subsets: ["arabic", "latin"],
+  weight: ["700"],
+  variable: "--font-display",
+});
 
-export const metadata: Metadata = {
-  title: "Nedjem Eddine — Portfolio",
-  description: "Web & Electron Developer | مطور مواقع وتطبيقات",
-};
+import { getSiteSettings } from "@/lib/queries";
+import { urlFor } from "@/lib/sanity";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const settings = await getSiteSettings();
+  const faviconUrl = settings?.favicon ? urlFor(settings.favicon).url() : "/favicon.ico";
+
+  return {
+    title: {
+      template: '%s | Nedjem Eddine',
+      default: settings?.siteNameEn || "Nedjem Eddine — Portfolio",
+    },
+    description: "Web Developer | مطور مواقع وتطبيقات",
+    icons: {
+      icon: faviconUrl,
+      shortcut: faviconUrl,
+      apple: faviconUrl,
+    },
+  };
+}
+
+import { cookies } from "next/headers";
 
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const cookieStore = cookies();
+  const lang = cookieStore.get("NEXT_LOCALE")?.value || "ar";
+  const dir = lang === "ar" ? "rtl" : "ltr";
+
   return (
-    <html lang="ar" dir="rtl">
+    <html lang={lang} dir={dir}>
       <body
-        className={`${playfair.variable} ${ibmPlexArabic.variable} bg-[#fdf8f0] text-[#0a0a0a] font-body`}
+        className={`${amiriDisplay.variable} ${amiri.variable} bg-white text-black font-body`}
       >
         {children}
       </body>

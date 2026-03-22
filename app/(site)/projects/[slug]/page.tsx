@@ -11,13 +11,26 @@ export async function generateStaticParams() {
   return projects.map((p: any) => ({ slug: p.slug?.current })).filter(Boolean);
 }
 
+import { cookies } from "next/headers";
+import { dictionary } from "@/lib/dictionary";
+
 export default async function ProjectDetailPage({
   params,
 }: {
   params: { slug: string };
 }) {
+  const cookieStore = cookies();
+  const lang = (cookieStore.get("NEXT_LOCALE")?.value || "ar") as "ar" | "en" | "fr";
+  const t = dictionary;
+
   const project = (await getProjectBySlug(params.slug).catch(() => null)) as any;
   if (!project) notFound();
+
+  const getLocalized = (obj: any, fieldBase: string) => {
+    if (!obj) return "";
+    const key = `${fieldBase}${lang.charAt(0).toUpperCase()}${lang.slice(1)}`;
+    return obj[key] || obj[`${fieldBase}En`] || obj[`${fieldBase}Ar`] || "";
+  };
 
   return (
     <div className="pt-28 pb-24 px-6">
@@ -25,39 +38,39 @@ export default async function ProjectDetailPage({
         {/* Back */}
         <Link
           href="/projects"
-          className="inline-flex items-center gap-2 text-sm text-[#c8883a] mb-10 hover:underline"
+          className="inline-flex items-center gap-2 text-sm text-[#bfac8e] mb-10 hover:underline"
         >
-          ← العودة إلى المشاريع
+          {lang === 'ar' ? '← العودة إلى المشاريع' : lang === 'fr' ? '← Retour aux projets' : '← Back to projects'}
         </Link>
 
         {/* Title */}
         <div className="mb-8">
           <div className="flex flex-wrap items-center gap-3 mb-4">
             {project.category && (
-              <span className="bg-[#0a0a0a] text-[#fdf8f0] text-xs px-4 py-1.5 rounded-full font-medium">
+              <span className="bg-[#bfac8e] text-black text-xs px-4 py-1.5 rounded-full font-medium">
                 {project.category}
               </span>
             )}
             {project.year && (
-              <span className="border border-[#0a0a0a] text-xs px-4 py-1.5 rounded-full">
+              <span className="border border-black text-xs px-4 py-1.5 rounded-full text-black">
                 {project.year}
               </span>
             )}
             {project.client && (
-              <span className="text-xs text-[#999]">العميل: {project.client}</span>
+              <span className="text-xs text-black/40">{t.client[lang]}: {project.client}</span>
             )}
           </div>
           <h1 className="font-display text-4xl md:text-5xl font-bold leading-tight">
-            {project.titleAr}
+            {getLocalized(project, "title")}
           </h1>
         </div>
 
         {/* Main Image */}
         {project.mainImage && (
-          <div className="relative h-80 md:h-[500px] rounded-2xl overflow-hidden mb-12 border border-[#f2d9ac] shadow-lg">
+          <div className="relative h-80 md:h-[500px] rounded-2xl overflow-hidden mb-12 border border-[#bfac8e] shadow-lg">
             <Image
               src={urlFor(project.mainImage).width(1200).url()}
-              alt={project.titleAr || project.titleEn || ""}
+              alt={getLocalized(project, "title")}
               fill
               className="object-cover"
               priority
@@ -66,21 +79,21 @@ export default async function ProjectDetailPage({
         )}
 
         {/* Description */}
-        {project.descriptionAr && (
-          <p className="text-lg text-[#555] leading-relaxed mb-10 border-r-4 border-[#c8883a] pr-6">
-            {project.descriptionAr}
+        {getLocalized(project, "description") && (
+          <p className="text-lg text-black leading-relaxed mb-10 border-r-4 border-[#bfac8e] pr-6">
+            {getLocalized(project, "description")}
           </p>
         )}
 
         {/* Technologies */}
         {project.technologies?.length > 0 && (
           <div className="mb-12">
-            <h3 className="font-display text-2xl font-semibold mb-5">التقنيات المستخدمة</h3>
+            <h3 className="font-display text-2xl font-semibold mb-5">{t.technologies[lang]}</h3>
             <div className="flex flex-wrap gap-3">
               {project.technologies.map((tech: string) => (
                 <span
                   key={tech}
-                  className="bg-[#f2d9ac] px-5 py-2 rounded-full text-sm font-medium"
+                  className="bg-[#bfac8e] px-5 py-2 rounded-full text-sm font-medium text-black"
                 >
                   {tech}
                 </span>
@@ -97,11 +110,11 @@ export default async function ProjectDetailPage({
               {project.images.map((img: any, i: number) => (
                 <div
                   key={i}
-                  className="relative h-56 md:h-72 rounded-xl overflow-hidden border border-[#f2d9ac] hover:shadow-lg transition-shadow"
+                  className="relative h-56 md:h-72 rounded-xl overflow-hidden border border-[#bfac8e] hover:shadow-lg transition-shadow"
                 >
                   <Image
                     src={urlFor(img).width(800).url()}
-                    alt={`لقطة شاشة ${i + 1}`}
+                    alt={`Screenshot ${i + 1}`}
                     fill
                     className="object-cover hover:scale-105 transition-transform duration-500"
                   />
@@ -112,15 +125,15 @@ export default async function ProjectDetailPage({
         )}
 
         {/* Action Buttons */}
-        <div className="flex flex-wrap gap-4 pt-4 border-t border-[#f2d9ac]">
+        <div className="flex flex-wrap gap-4 pt-4 border-t border-[#bfac8e]">
           {project.liveUrl && (
             <a
               href={project.liveUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-[#0a0a0a] text-[#fdf8f0] px-8 py-3 rounded-full hover:bg-[#c8883a] transition-colors font-medium"
+              className="bg-[#bfac8e] text-black px-8 py-3 rounded-full hover:bg-black hover:text-white transition-colors font-medium"
             >
-              🌐 عرض المشروع المباشر
+              🌐 {t.liveDemo[lang]}
             </a>
           )}
           {project.githubUrl && (
@@ -128,16 +141,16 @@ export default async function ProjectDetailPage({
               href={project.githubUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="border-2 border-[#0a0a0a] px-8 py-3 rounded-full hover:bg-[#0a0a0a] hover:text-[#fdf8f0] transition-colors font-medium"
+              className="border-2 border-black px-8 py-3 rounded-full hover:bg-[#bfac8e] hover:text-black transition-colors font-medium"
             >
-              💻 الكود على GitHub
+              💻 {t.sourceCode[lang]}
             </a>
           )}
           <Link
             href="/contact"
-            className="border-2 border-[#c8883a] text-[#c8883a] px-8 py-3 rounded-full hover:bg-[#c8883a] hover:text-white transition-colors font-medium"
+            className="border-2 border-[#bfac8e] text-[#bfac8e] px-8 py-3 rounded-full hover:bg-black hover:text-white transition-colors font-medium"
           >
-            طلب مشروع مماثل
+            {t.similarProject[lang]}
           </Link>
         </div>
       </div>
