@@ -9,7 +9,7 @@ export async function POST(req: Request) {
 
     const data = await resend.emails.send({
       from: 'Portfolio Contact <onboarding@resend.dev>',
-      to: 'ouassimtahi@gmail.com',
+      to: process.env.CONTACT_EMAIL || 'ouassimtahi@gmail.com',
       subject: `طلب مشروع جديد: ${serviceType}`,
       html: `
         <h2>معلومات الطلب الجديد:</h2>
