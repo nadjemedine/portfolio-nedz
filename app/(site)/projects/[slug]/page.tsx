@@ -3,6 +3,7 @@ import { urlFor } from "@/lib/sanity";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import ProjectGallery from "@/components/ProjectGallery";
 
 export const revalidate = 60;
 
@@ -30,6 +31,17 @@ export default async function ProjectDetailPage({
     if (!obj) return "";
     const key = `${fieldBase}${lang.charAt(0).toUpperCase()}${lang.slice(1)}`;
     return obj[key] || obj[`${fieldBase}En`] || obj[`${fieldBase}Ar`] || "";
+  };
+
+  // Combine main image and gallery images for a complete view
+  const allImages = project.mainImage 
+    ? [project.mainImage, ...(project.images || [])] 
+    : (project.images || []);
+
+  const galleryTitles = {
+    gallery: t.gallery[lang],
+    clickToEnlarge: t.clickToEnlarge[lang],
+    close: t.close[lang]
   };
 
   return (
@@ -65,19 +77,6 @@ export default async function ProjectDetailPage({
           </h1>
         </div>
 
-        {/* Main Image */}
-        {project.mainImage && (
-          <div className="relative h-80 md:h-[500px] rounded-2xl overflow-hidden mb-12 border border-[#bfac8e] shadow-lg">
-            <Image
-              src={urlFor(project.mainImage).width(1200).url()}
-              alt={getLocalized(project, "title")}
-              fill
-              className="object-cover"
-              priority
-            />
-          </div>
-        )}
-
         {/* Description */}
         {getLocalized(project, "description") && (
           <p className="text-lg text-black leading-relaxed mb-10 border-r-4 border-[#bfac8e] pr-6">
@@ -102,27 +101,8 @@ export default async function ProjectDetailPage({
           </div>
         )}
 
-        {/* Gallery */}
-        {project.images?.length > 0 && (
-          <div className="mb-12">
-            <h3 className="font-display text-2xl font-semibold mb-6">معرض الصور</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-              {project.images.map((img: any, i: number) => (
-                <div
-                  key={i}
-                  className="relative h-56 md:h-72 rounded-xl overflow-hidden border border-[#bfac8e] hover:shadow-lg transition-shadow"
-                >
-                  <Image
-                    src={urlFor(img).width(800).url()}
-                    alt={`Screenshot ${i + 1}`}
-                    fill
-                    className="object-cover hover:scale-105 transition-transform duration-500"
-                  />
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
+        {/* Gallery - Now includes everything in a premium grid */}
+        <ProjectGallery images={allImages} titles={galleryTitles} />
 
         {/* Action Buttons */}
         <div className="flex flex-wrap gap-4 pt-4 border-t border-[#bfac8e]">

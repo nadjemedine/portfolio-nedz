@@ -36,3 +36,9 @@ body {
   50%       { opacity: 0.4; }
 }
 .animate-pulse { animation: pulse-dot 2s ease-in-out infinite; }
+
+@layer utilities {
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}

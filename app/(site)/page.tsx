@@ -62,9 +62,9 @@ export default async function HomePage() {
 
           <Reveal delay={0.2} className="order-1 md:order-2 flex justify-center">
             {(hero as any)?.image ? (
-              <div className="relative w-72 h-72 md:w-96 md:h-96 rounded-3xl overflow-hidden border-4 border-[#bfac8e] shadow-2xl">
+              <div className="relative w-72 h-[450px] md:w-[400px] md:h-[550px] rounded-3xl overflow-hidden border-4 border-[#bfac8e] shadow-2xl">
                 <Image
-                  src={urlFor((hero as any).image).width(800).url()}
+                  src={urlFor((hero as any).image).width(1000).url()}
                   alt="Nedjem Eddine"
                   fill
                   className="object-cover"
@@ -72,7 +72,7 @@ export default async function HomePage() {
                 />
               </div>
             ) : (
-              <div className="w-72 h-72 md:w-96 md:h-96 rounded-3xl bg-gradient-to-br from-[#bfac8e] to-[#bfac8e]/80 flex items-center justify-center border-4 border-[#bfac8e] shadow-2xl">
+              <div className="w-72 h-[450px] md:w-[400px] md:h-[550px] rounded-3xl bg-gradient-to-br from-[#bfac8e] to-[#bfac8e]/80 flex items-center justify-center border-4 border-[#bfac8e] shadow-2xl">
                 <span className="font-display text-7xl font-bold text-white opacity-60">N</span>
               </div>
             )}

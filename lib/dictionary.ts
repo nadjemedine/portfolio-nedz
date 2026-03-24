@@ -91,4 +91,6 @@ export const dictionary = {
   similarProject: { ar: 'طلب مشروع مماثل', en: 'Request similar project', fr: 'Demander un projet similaire' },
   year: { ar: 'السنة', en: 'Year', fr: 'Année' },
   client: { ar: 'العميل', en: 'Client', fr: 'Client' },
+  gallery: { ar: 'معرض الصور', en: 'Project Gallery', fr: 'Galerie du Projet' },
+  clickToEnlarge: { ar: 'انقر للتكبير', en: 'Click to enlarge', fr: 'Cliquer pour agrandir' },
 };
