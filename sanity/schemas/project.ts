@@ -49,6 +49,7 @@ export default defineType({
           { title: 'Website', value: 'website' },
           { title: 'Web App', value: 'webapp' },
           { title: 'Mobile App', value: 'mobile' },
+          { title: 'Online Store', value: 'ecommerce' },
           { title: 'Other', value: 'other' },
         ],
       },

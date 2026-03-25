@@ -9,6 +9,7 @@ type Lang = 'ar' | 'fr' | 'en';
 const navLinks = [
   { href: '/',         ar: 'الرئيسية', fr: 'Accueil',   en: 'Home'     },
   { href: '/projects', ar: 'المشاريع', fr: 'Projets',   en: 'Projects' },
+  { href: '/resume',   ar: 'السيرة الذاتية', fr: 'Resume',    en: 'Resume'   },
   { href: '/about',    ar: 'حول',      fr: 'À propos',  en: 'About'    },
   { href: '/contact',  ar: 'تواصل',    fr: 'Contact',   en: 'Contact'  },
 ];

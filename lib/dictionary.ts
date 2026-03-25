@@ -49,6 +49,7 @@ export const dictionary = {
   websites: { ar: 'مواقع ويب', en: 'Websites', fr: 'Sites Web' },
   webapps: { ar: 'تطبيقات ويب', en: 'Web Apps', fr: 'Applications Web' },
   mobile: { ar: 'موبايل', en: 'Mobile', fr: 'Mobile' },
+  ecommerce: { ar: 'متجر إلكتروني', en: 'Online Store', fr: 'Boutique en ligne' },
   projectsHeaderTitle: { ar: 'المشاريع', en: 'Projects', fr: 'Projets' },
   projectsHeaderSubtitle: { ar: 'استكشف بعضاً من أحدث أعمالي وحلولي الرقمية.', en: 'Explore some of my latest work and digital solutions.', fr: 'Découvrez certains de mes derniers travaux et solutions numériques.' },
   viewProject: { ar: 'عرض المشروع ←', en: 'View Project ←', fr: 'Voir le projet ←' },
@@ -93,4 +94,7 @@ export const dictionary = {
   client: { ar: 'العميل', en: 'Client', fr: 'Client' },
   gallery: { ar: 'معرض الصور', en: 'Project Gallery', fr: 'Galerie du Projet' },
   clickToEnlarge: { ar: 'انقر للتكبير', en: 'Click to enlarge', fr: 'Cliquer pour agrandir' },
+  resumeTitle: { ar: 'السيرة الذاتية', en: 'Resume', fr: 'Curriculum Vitae' },
+  downloadResume: { ar: 'تحميل السيرة الذاتية', en: 'Download CV', fr: 'Télécharger le CV' },
+  resumeSubtitle: { ar: 'عرض وتحميل سيرتي الذاتية المفصلة', en: 'View and download my detailed resume', fr: 'Voir et télécharger mon CV détaillé' },
 };

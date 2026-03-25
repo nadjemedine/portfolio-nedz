@@ -103,3 +103,28 @@ export async function getSiteSettings() {
     favicon
   }`);
 }
+
+// ─── Resume ───────────────────────────────────────────────────────────────────
+export async function getResumeData() {
+  return client.fetch(`*[_type == "resume"][0]{
+    titleAr, titleFr, titleEn,
+    summaryAr, summaryFr, summaryEn,
+    experiences[]{
+      company,
+      roleAr, roleFr, roleEn,
+      startDate, endDate,
+      descriptionAr, descriptionFr, descriptionEn
+    },
+    education[]{
+      institution,
+      degreeAr, degreeFr, degreeEn,
+      year
+    },
+    skills[]{
+      category,
+      items
+    },
+    "resumeFileUrl": resumeFile.asset->url,
+    lastUpdated
+  }`);
+}

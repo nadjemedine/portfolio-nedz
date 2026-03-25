@@ -24,6 +24,9 @@ export default defineConfig({
             S.listItem().title('Contact / تواصل').id('contact').child(
               S.document().schemaType('contact').documentId('contact')
             ),
+            S.listItem().title('Resume / CV / السيرة الذاتية').id('resume').child(
+              S.document().schemaType('resume').documentId('resume')
+            ),
             S.listItem().title('Site Settings / الإعدادات').id('siteSettings').child(
               S.document().schemaType('siteSettings').documentId('siteSettings')
             ),
