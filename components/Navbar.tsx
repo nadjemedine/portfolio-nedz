@@ -14,10 +14,14 @@ const navLinks = [
   { href: '/contact',  ar: 'تواصل',    fr: 'Contact',   en: 'Contact'  },
 ];
 
-export default function Navbar({ initialLang = 'ar', logoUrl }: { initialLang?: string, logoUrl: string }) {
+export default function Navbar({ initialLang = 'ar', logoUrl, hideResume }: { initialLang?: string, logoUrl: string, hideResume?: boolean }) {
   const pathname = usePathname();
   const router = useRouter();
   const [lang, setLangState] = useState<Lang>(initialLang as Lang);
+
+  const filteredLinks = hideResume 
+    ? navLinks.filter(link => link.href !== '/resume')
+    : navLinks;
 
   const setLang = (l: Lang) => {
     setLangState(l);
@@ -41,7 +45,7 @@ export default function Navbar({ initialLang = 'ar', logoUrl }: { initialLang?: 
 
         {/* Desktop Nav */}
         <div className="hidden md:flex items-center gap-8">
-          {navLinks.map((link) => (
+          {filteredLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
@@ -89,7 +93,7 @@ export default function Navbar({ initialLang = 'ar', logoUrl }: { initialLang?: 
       {/* Mobile Menu */}
       {mobileOpen && (
         <div className="md:hidden bg-white border-t border-[#bfac8e] px-6 py-4 space-y-4">
-          {navLinks.map((link) => (
+          {filteredLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}

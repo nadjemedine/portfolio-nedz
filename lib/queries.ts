@@ -59,6 +59,8 @@ export async function getProjects() {
     liveUrl,
     githubUrl,
     featured,
+    displayMode,
+    animationType,
     year
   }`);
 }
@@ -77,6 +79,8 @@ export async function getProjectBySlug(slug: string) {
     liveUrl,
     githubUrl,
     featured,
+    displayMode,
+    animationType,
     year,
     client
   }`, { slug });
@@ -125,6 +129,7 @@ export async function getResumeData() {
       items
     },
     "resumeFileUrl": resumeFile.asset->url,
+    hidden,
     lastUpdated
   }`);
 }

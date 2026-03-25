@@ -59,6 +59,32 @@ export default defineType({
     defineField({ name: 'client', title: 'Client Name', type: 'string' }),
     defineField({ name: 'year', title: 'Year', type: 'string' }),
     defineField({ name: 'featured', title: 'Featured on Homepage', type: 'boolean', initialValue: false }),
+    defineField({
+      name: 'displayMode',
+      title: 'Gallery Display Mode',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Grid', value: 'grid' },
+          { title: 'Carousel', value: 'snap' },
+        ],
+      },
+      initialValue: 'snap',
+    }),
+    defineField({
+      name: 'animationType',
+      title: 'Entrance Animation',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Fade In', value: 'fade' },
+          { title: 'Slide Up', value: 'slideUp' },
+          { title: 'Zoom In', value: 'zoom' },
+          { title: 'Skew In', value: 'skew' },
+        ],
+      },
+      initialValue: 'slideUp',
+    }),
     defineField({ name: 'orderRank', title: 'Order Rank', type: 'number' }),
   ],
   orderings: [

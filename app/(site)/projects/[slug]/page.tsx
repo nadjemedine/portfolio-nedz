@@ -1,9 +1,10 @@
 import { getProjectBySlug, getProjects } from "@/lib/queries";
-import { urlFor } from "@/lib/sanity";
-import Image from "next/image";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import ProjectGallery from "@/components/ProjectGallery";
+import Link from "next/link";
+import { cookies } from "next/headers";
+import { dictionary } from "@/lib/dictionary";
+import { RevealAnimation } from "@/components/RevealAnimation";
 
 export const revalidate = 60;
 
@@ -11,9 +12,6 @@ export async function generateStaticParams() {
   const projects = (await getProjects().catch(() => [])) as any[];
   return projects.map((p: any) => ({ slug: p.slug?.current })).filter(Boolean);
 }
-
-import { cookies } from "next/headers";
-import { dictionary } from "@/lib/dictionary";
 
 export default async function ProjectDetailPage({
   params,
@@ -33,7 +31,6 @@ export default async function ProjectDetailPage({
     return obj[key] || obj[`${fieldBase}En`] || obj[`${fieldBase}Ar`] || "";
   };
 
-  // Combine main image and gallery images for a complete view
   const allImages = project.mainImage 
     ? [project.mainImage, ...(project.images || [])] 
     : (project.images || []);
@@ -44,95 +41,115 @@ export default async function ProjectDetailPage({
     close: t.close[lang]
   };
 
+  const animationType = project.animationType || 'slideUp';
+  const displayMode = project.displayMode || 'snap';
+
   return (
-    <div className="pt-28 pb-24 px-6">
+    <div className="pt-28 pb-24 px-6 overflow-hidden">
       <div className="max-w-4xl mx-auto">
         {/* Back */}
-        <Link
-          href="/projects"
-          className="inline-flex items-center gap-2 text-sm text-[#bfac8e] mb-10 hover:underline"
-        >
-          {lang === 'ar' ? '← العودة إلى المشاريع' : lang === 'fr' ? '← Retour aux projets' : '← Back to projects'}
-        </Link>
+        <RevealAnimation type="fade">
+          <Link
+            href="/projects"
+            className="inline-flex items-center gap-2 text-sm text-[#bfac8e] mb-10 hover:underline font-bold"
+          >
+            {lang === 'ar' ? '← العودة إلى المشاريع' : lang === 'fr' ? '← Retour aux projets' : '← Back to projects'}
+          </Link>
+        </RevealAnimation>
 
-        {/* Title */}
-        <div className="mb-8">
-          <div className="flex flex-wrap items-center gap-3 mb-4">
-            {project.category && (
-              <span className="bg-[#bfac8e] text-black text-xs px-4 py-1.5 rounded-full font-medium">
-                {project.category}
-              </span>
-            )}
-            {project.year && (
-              <span className="border border-black text-xs px-4 py-1.5 rounded-full text-black">
-                {project.year}
-              </span>
-            )}
-            {project.client && (
-              <span className="text-xs text-black/40">{t.client[lang]}: {project.client}</span>
-            )}
+        {/* Title Section */}
+        <RevealAnimation type={animationType}>
+          <div className="mb-12">
+            <div className="flex flex-wrap items-center gap-3 mb-6">
+              {project.category && (
+                <span className="bg-black text-[#bfac8e] text-[10px] px-4 py-1.5 rounded-full font-black uppercase tracking-widest shadow-xl">
+                  {project.category}
+                </span>
+              )}
+              {project.year && (
+                <span className="border border-black/10 text-xs px-4 py-1.5 rounded-full text-black font-bold">
+                  {project.year}
+                </span>
+              )}
+              {project.client && (
+                <span className="text-[10px] text-black/40 font-bold uppercase tracking-wider">{t.client[lang]}: {project.client}</span>
+              )}
+            </div>
+            <h1 className="font-display text-5xl md:text-7xl font-bold leading-[0.9] mb-8 text-black">
+              {getLocalized(project, "title")}
+            </h1>
           </div>
-          <h1 className="font-display text-4xl md:text-5xl font-bold leading-tight">
-            {getLocalized(project, "title")}
-          </h1>
-        </div>
+        </RevealAnimation>
 
         {/* Description */}
-        {getLocalized(project, "description") && (
-          <p className="text-lg text-black leading-relaxed mb-10 border-r-4 border-[#bfac8e] pr-6">
-            {getLocalized(project, "description")}
-          </p>
-        )}
+        <RevealAnimation type={animationType} delay={0.2}>
+          {getLocalized(project, "description") && (
+            <div className="text-xl md:text-2xl text-black leading-tight mb-20 flex gap-6">
+              <div className="w-1.5 bg-[#bfac8e] shrink-0 rounded-full" />
+              <p className="italic font-medium">
+                {getLocalized(project, "description")}
+              </p>
+            </div>
+          )}
+        </RevealAnimation>
 
         {/* Technologies */}
-        {project.technologies?.length > 0 && (
-          <div className="mb-12">
-            <h3 className="font-display text-2xl font-semibold mb-5">{t.technologies[lang]}</h3>
-            <div className="flex flex-wrap gap-3">
-              {project.technologies.map((tech: string) => (
-                <span
-                  key={tech}
-                  className="bg-[#bfac8e] px-5 py-2 rounded-full text-sm font-medium text-black"
-                >
-                  {tech}
-                </span>
-              ))}
+        <RevealAnimation type="fade" delay={0.3}>
+          {project.technologies?.length > 0 && (
+            <div className="mb-20">
+              <h3 className="font-display text-[10px] font-black uppercase tracking-[0.3em] mb-8 text-black/20">{t.technologies[lang]}</h3>
+              <div className="flex flex-wrap gap-2">
+                {project.technologies.map((tech: string) => (
+                  <span
+                    key={tech}
+                    className="bg-[#bfac8e]/10 border border-[#bfac8e]/30 px-6 py-2 rounded-full text-xs font-bold text-black"
+                  >
+                    {tech}
+                  </span>
+                ))}
+              </div>
             </div>
-          </div>
-        )}
+          )}
+        </RevealAnimation>
 
-        {/* Gallery - Now includes everything in a premium grid */}
-        <ProjectGallery images={allImages} titles={galleryTitles} />
+        {/* Gallery */}
+        <RevealAnimation type={animationType} delay={0.4}>
+          <div className="mb-24">
+             <ProjectGallery images={allImages} titles={galleryTitles} displayMode={displayMode} />
+          </div>
+        </RevealAnimation>
 
         {/* Action Buttons */}
-        <div className="flex flex-wrap gap-4 pt-4 border-t border-[#bfac8e]">
-          {project.liveUrl && (
-            <a
-              href={project.liveUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-[#bfac8e] text-black px-8 py-3 rounded-full hover:bg-black hover:text-white transition-colors font-medium"
+        <RevealAnimation type="slideUp" delay={0.5}>
+          <div className="flex flex-wrap gap-4 pt-12 border-t border-[#bfac8e]/20">
+            {project.liveUrl && (
+              <a
+                href={project.liveUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-black text-white px-10 py-5 rounded-[2rem] hover:bg-[#bfac8e] hover:text-black transition-all font-black text-xs uppercase tracking-widest shadow-2xl hover:scale-105 active:scale-95"
+              >
+                🌐 {t.liveDemo[lang]}
+              </a>
+            )}
+            {project.githubUrl && (
+              <a
+                href={project.githubUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="border-2 border-black px-10 py-5 rounded-[2rem] hover:bg-[#bfac8e] hover:border-[#bfac8e] hover:text-black transition-all font-black text-xs uppercase tracking-widest hover:scale-105 active:scale-95"
+              >
+                💻 {t.sourceCode[lang]}
+              </a>
+            )}
+            <Link
+              href="/contact"
+              className="bg-[#bfac8e]/10 text-black px-10 py-5 rounded-[2rem] hover:bg-black hover:text-white transition-all font-black text-xs uppercase tracking-widest hover:scale-105 active:scale-95 text-center min-w-[200px]"
             >
-              🌐 {t.liveDemo[lang]}
-            </a>
-          )}
-          {project.githubUrl && (
-            <a
-              href={project.githubUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="border-2 border-black px-8 py-3 rounded-full hover:bg-[#bfac8e] hover:text-black transition-colors font-medium"
-            >
-              💻 {t.sourceCode[lang]}
-            </a>
-          )}
-          <Link
-            href="/contact"
-            className="border-2 border-[#bfac8e] text-[#bfac8e] px-8 py-3 rounded-full hover:bg-black hover:text-white transition-colors font-medium"
-          >
-            {t.similarProject[lang]}
-          </Link>
-        </div>
+              {t.similarProject[lang]}
+            </Link>
+          </div>
+        </RevealAnimation>
       </div>
     </div>
   );

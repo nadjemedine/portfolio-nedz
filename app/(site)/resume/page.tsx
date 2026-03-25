@@ -1,6 +1,7 @@
 import { getResumeData } from "@/lib/queries";
 import { dictionary } from "@/lib/dictionary";
 import { cookies } from "next/headers";
+import { notFound } from "next/navigation";
 import Reveal from "@/components/Reveal";
 
 export const revalidate = 60;
@@ -11,6 +12,10 @@ export default async function ResumePage() {
   const t = dictionary;
 
   const resume = (await getResumeData().catch(() => null)) as any;
+
+  if (resume?.hidden) {
+    return notFound();
+  }
 
   const getLocalized = (obj: any, fieldBase: string) => {
     if (!obj) return "";

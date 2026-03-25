@@ -93,6 +93,12 @@ export default defineType({
       },
     }),
     defineField({
+      name: 'hidden',
+      title: 'Hide Resume from Navbar',
+      type: 'boolean',
+      initialValue: false,
+    }),
+    defineField({
       name: 'lastUpdated',
       title: 'Last Updated',
       type: 'date',

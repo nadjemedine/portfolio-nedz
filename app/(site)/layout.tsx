@@ -3,7 +3,7 @@ import Footer from "@/components/Footer";
 
 import { cookies } from "next/headers";
 import { getSiteSettings } from "@/lib/queries";
-import { urlFor } from "@/lib/sanity";
+import { urlFor, client } from "@/lib/sanity";
 
 export default async function SiteLayout({
   children,
@@ -13,11 +13,13 @@ export default async function SiteLayout({
   const cookieStore = cookies();
   const lang = (cookieStore.get("NEXT_LOCALE")?.value || "ar") as "ar" | "en" | "fr";
   const settings = await getSiteSettings();
+  const resume = await client.fetch(`*[_type == "resume"][0]{ hidden }`);
+  
   const logoUrl = settings?.logo ? urlFor(settings.logo).url() : "/logo.png";
 
   return (
     <>
-      <Navbar initialLang={lang} logoUrl={logoUrl} />
+      <Navbar initialLang={lang} logoUrl={logoUrl} hideResume={resume?.hidden} />
       <main className="min-h-screen">{children}</main>
       <Footer lang={lang} logoUrl={logoUrl} />
     </>

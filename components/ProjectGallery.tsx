@@ -4,10 +4,11 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { urlFor } from "@/lib/sanity";
-import { IoClose, IoChevronBack, IoChevronForward, IoGridOutline, IoLayersOutline } from "react-icons/io5";
+import { IoClose, IoChevronBack, IoChevronForward } from "react-icons/io5";
 
 interface ProjectGalleryProps {
   images: any[];
+  displayMode?: 'snap' | 'grid';
   titles?: {
     gallery: string;
     clickToEnlarge: string;
@@ -15,9 +16,9 @@ interface ProjectGalleryProps {
   };
 }
 
-export default function ProjectGallery({ images, titles }: ProjectGalleryProps) {
+export default function ProjectGallery({ images, titles, displayMode = 'snap' }: ProjectGalleryProps) {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
-  const [viewMode, setViewMode] = useState<'snap' | 'grid'>('snap');
+  const viewMode = displayMode;
 
   // Close on Escape key
   useEffect(() => {
@@ -44,44 +45,17 @@ export default function ProjectGallery({ images, titles }: ProjectGalleryProps) 
     }
   };
 
-  const scrollRef = useState<HTMLDivElement | null>(null)[0];
-
-  const scrollToIndex = (index: number) => {
-    const el = document.getElementById(`gallery-item-${index}`);
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-    }
-  };
-
   if (!images || images.length === 0) return null;
 
   return (
     <div className="mb-12">
       <div className="flex items-center justify-between mb-8">
-        <h3 className="font-display text-2xl font-semibold flex items-center gap-3">
+        <h3 className="font-display text-2xl font-semibold flex items-center gap-3 text-black">
           {titles?.gallery || "معرض الصور"}
           <span className="text-xs font-normal text-black/40 bg-black/5 px-2 py-1 rounded-md">
             {images.length}
           </span>
         </h3>
-        
-        {/* View Toggle */}
-        <div className="flex bg-black/5 p-1 rounded-xl">
-          <button 
-            onClick={() => setViewMode('snap')}
-            className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all ${viewMode === 'snap' ? 'bg-white text-black shadow-sm' : 'text-black/40 hover:text-black'}`}
-          >
-            <IoLayersOutline className="text-lg" />
-            <span className="hidden sm:inline">Carousel</span>
-          </button>
-          <button 
-            onClick={() => setViewMode('grid')}
-            className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all ${viewMode === 'grid' ? 'bg-white text-black shadow-sm' : 'text-black/40 hover:text-black'}`}
-          >
-            <IoGridOutline className="text-lg" />
-            <span className="hidden sm:inline">Grid</span>
-          </button>
-        </div>
       </div>
 
       {viewMode === 'grid' ? (
@@ -147,7 +121,7 @@ export default function ProjectGallery({ images, titles }: ProjectGalleryProps) 
                   const container = document.querySelector('.snap-x');
                   if (container) container.scrollBy({ left: -400, behavior: 'smooth' });
                 }}
-                className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/90 text-black p-3 rounded-full shadow-xl opacity-0 group-hover/gallery:opacity-100 transition-all hover:scale-110 z-10 hidden md:flex"
+                className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/90 text-black p-3 rounded-full shadow-xl opacity-100 transition-all hover:scale-110 z-10 hidden md:flex"
               >
                 <IoChevronBack className="text-2xl" />
               </button>
@@ -156,7 +130,7 @@ export default function ProjectGallery({ images, titles }: ProjectGalleryProps) 
                   const container = document.querySelector('.snap-x');
                   if (container) container.scrollBy({ left: 400, behavior: 'smooth' });
                 }}
-                className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/90 text-black p-3 rounded-full shadow-xl opacity-0 group-hover/gallery:opacity-100 transition-all hover:scale-110 z-10 hidden md:flex"
+                className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/90 text-black p-3 rounded-full shadow-xl opacity-100 transition-all hover:scale-110 z-10 hidden md:flex"
               >
                 <IoChevronForward className="text-2xl" />
               </button>
