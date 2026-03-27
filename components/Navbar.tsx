@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import LanguageSwitcher from './LanguageSwitcher';
 
 type Lang = 'ar' | 'fr' | 'en';
 
@@ -65,33 +66,26 @@ export default function Navbar({ initialLang = 'ar', logoUrl, hideResume }: { in
           ))}
         </div>
 
-        {/* Language Switcher */}
+        {/* Language Switcher (Desktop) */}
         <div className="hidden md:flex items-center gap-2">
-          <div className="flex border border-black/20 rounded-full overflow-hidden">
-            {(['ar', 'fr', 'en'] as Lang[]).map((l) => (
-              <button
-                key={l}
-                onClick={() => setLang(l)}
-                className={`px-3 py-1.5 text-xs font-semibold transition-colors ${
-                  lang === l
-                    ? 'bg-[#bfac8e] text-black'
-                    : 'text-black hover:bg-[#bfac8e]'
-                }`}
-              >
-                {l.toUpperCase()}
-              </button>
-            ))}
-          </div>
+          <LanguageSwitcher currentLang={lang} onLangChange={setLang} />
         </div>
 
-        {/* Mobile Burger */}
-        <button
-          className="md:hidden text-xl p-2 h-10 w-10 flex items-center justify-center rounded-full hover:bg-black/5 transition-colors"
-          onClick={() => setMobileOpen(!mobileOpen)}
-          aria-label="Toggle menu"
-        >
-          {mobileOpen ? '✕' : '☰'}
-        </button>
+        <div className="flex items-center gap-2">
+          {/* Mobile Language Switcher (Now next to Menu) */}
+          <div className="md:hidden">
+            <LanguageSwitcher currentLang={lang} onLangChange={setLang} />
+          </div>
+
+          {/* Mobile Burger */}
+          <button
+            className="md:hidden text-xl p-2 h-10 w-10 flex items-center justify-center rounded-full hover:bg-black/5 transition-colors"
+            onClick={() => setMobileOpen(!mobileOpen)}
+            aria-label="Toggle menu"
+          >
+            {mobileOpen ? '✕' : '☰'}
+          </button>
+        </div>
       </div>
 
       {/* Mobile Menu */}
@@ -122,22 +116,7 @@ export default function Navbar({ initialLang = 'ar', logoUrl, hideResume }: { in
                   </Link>
                 </motion.div>
               ))}
-              <div className="flex border border-black/20 rounded-full overflow-hidden w-fit mt-6">
-                {(['ar', 'fr', 'en'] as Lang[]).map((l) => (
-                  <button
-                    key={l}
-                    onClick={() => {
-                      setLang(l);
-                      setMobileOpen(false);
-                    }}
-                    className={`px-4 py-2 text-xs font-semibold transition-colors ${
-                      lang === l ? 'bg-[#bfac8e] text-black' : 'hover:bg-[#bfac8e]'
-                    }`}
-                  >
-                    {l.toUpperCase()}
-                  </button>
-                ))}
-              </div>
+              {/* Old language switcher removed from mobile menu */}
             </div>
           </motion.div>
         )}
