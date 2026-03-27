@@ -106,7 +106,7 @@ export default function ProjectCard({
     >
       <Link
         href={`/projects/${project.slug?.current}`}
-        className="block bg-white rounded-[2rem] md:rounded-[2.5rem] overflow-hidden border border-[#bfac8e]/20 hover:border-[#bfac8e] hover:shadow-2xl transition-all duration-500 h-full shadow-lg md:shadow-none"
+        className="block bg-white rounded-[2rem] md:rounded-[2.5rem] overflow-hidden border border-black/5 hover:border-black hover:shadow-2xl transition-all duration-500 h-full shadow-lg md:shadow-none"
       >
         {/* Card Image */}
         <div className="relative h-64 md:h-72 overflow-hidden">

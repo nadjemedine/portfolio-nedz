@@ -56,7 +56,7 @@ export default function ProjectGallery({ images, titles, displayMode = 'snap' }:
                 key={i}
                 layoutId={`image-grid-${i}`}
                 onClick={() => setSelectedIndex(i)}
-                className={`group relative rounded-2xl overflow-hidden border border-[#bfac8e]/30 cursor-pointer hover:shadow-2xl transition-all duration-300 bg-white ${
+                className={`group relative rounded-2xl overflow-hidden border border-black/10 cursor-pointer hover:shadow-2xl transition-all duration-300 bg-white ${
                   i === 0 ? "md:col-span-2 md:row-span-2 h-[450px]" : "h-60"
                 }`}
                 whileHover={{ y: -5 }}
@@ -84,7 +84,7 @@ export default function ProjectGallery({ images, titles, displayMode = 'snap' }:
               <div 
                 key={i} 
                 onClick={() => setSelectedIndex(i)}
-                className="relative break-inside-avoid rounded-2xl overflow-hidden border border-[#bfac8e]/20 cursor-pointer hover:shadow-xl transition-all group"
+                className="relative break-inside-avoid rounded-2xl overflow-hidden border border-black/5 cursor-pointer hover:shadow-xl transition-all group"
               >
                 <Image
                   src={urlFor(img).width(800).url()}
@@ -105,7 +105,7 @@ export default function ProjectGallery({ images, titles, displayMode = 'snap' }:
               <motion.div
                 key={i}
                 onClick={() => setSelectedIndex(i)}
-                className="absolute w-[80%] h-[400px] rounded-3xl overflow-hidden border-4 border-white shadow-2xl cursor-pointer"
+                className="absolute w-[80%] h-[400px] rounded-3xl overflow-hidden border-4 border-black/10 shadow-2xl cursor-pointer"
                 initial={{ z: -i * 100, y: i * 20, opacity: 1 - i * 0.2 }}
                 whileHover={{ y: -20, rotateX: 5, z: 50, transition: { duration: 0.3 } }}
                 style={{ zIndex: images.length - i }}
@@ -178,7 +178,7 @@ export default function ProjectGallery({ images, titles, displayMode = 'snap' }:
                 key={i}
                 initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                className="relative h-[500px] rounded-[2.5rem] overflow-hidden border border-[#bfac8e]/20 group shadow-lg"
+                className="relative h-[500px] rounded-[2.5rem] overflow-hidden border border-black/10 group shadow-lg"
               >
                 <Image
                   src={urlFor(img).width(1600).url()}
@@ -208,7 +208,7 @@ export default function ProjectGallery({ images, titles, displayMode = 'snap' }:
                   id={`gallery-item-${i}`}
                   layoutId={`image-snap-${i}`}
                   onClick={() => setSelectedIndex(i)}
-                  className="relative flex-none w-[85vw] md:w-[600px] h-80 md:h-[450px] rounded-3xl overflow-hidden border border-[#bfac8e]/20 snap-center cursor-pointer bg-white shadow-lg mx-auto first:ml-0 last:mr-0"
+                  className="relative flex-none w-[85vw] md:w-[600px] h-80 md:h-[450px] rounded-3xl overflow-hidden border border-black/10 snap-center cursor-pointer bg-white shadow-lg mx-auto first:ml-0 last:mr-0"
                 >
                   <Image
                     src={urlFor(img).width(1200).url()}

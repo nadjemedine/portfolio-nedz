@@ -36,7 +36,7 @@ export default function Navbar({ initialLang = 'ar', logoUrl, hideResume }: { in
     href === '/' ? pathname === '/' : pathname.startsWith(href);
 
   return (
-    <nav className="fixed top-0 w-full z-50 bg-gray-100/95 backdrop-blur-sm border-b border-[#bfac8e]">
+    <nav className="fixed top-0 w-full z-50 bg-gray-100/95 backdrop-blur-sm border-b border-black/5">
       <div className="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="relative flex items-center w-[100px]">

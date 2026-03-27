@@ -20,7 +20,7 @@ export default function ProjectsList({ initialProjects, categories, t, lang }: P
   return (
     <div className="space-y-12">
       {/* Filter Tabs */}
-      <div className="flex flex-wrap justify-center gap-3 sticky top-24 z-30 bg-[#0a0a0a]/80 backdrop-blur-md py-2 px-4 rounded-full border border-white/5">
+      <div className="flex flex-wrap justify-center gap-3 sticky top-24 z-30 bg-white/90 backdrop-blur-md py-2 px-4 rounded-full border border-gray-200 shadow-sm">
         {[{ value: "all", label: t.all[lang] }, ...categories.slice(1)].map((cat) => (
           <button
             key={cat.value}

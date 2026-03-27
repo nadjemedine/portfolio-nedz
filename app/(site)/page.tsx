@@ -67,7 +67,7 @@ export default async function HomePage() {
 
           <Reveal type="blur" delay={0.2} className="order-1 md:order-2 flex justify-center">
             {(hero as any)?.image ? (
-              <div className="relative w-80 h-[400px] md:w-[550px] md:h-[450px] rounded-3xl overflow-hidden border-4 border-[#bfac8e] shadow-2xl">
+              <div className="relative w-80 h-[400px] md:w-[550px] md:h-[450px] rounded-3xl overflow-hidden border-4 border-black/10 shadow-2xl">
                 <Image
                   src={urlFor((hero as any).image).width(1000).url()}
                   alt="Nedjem Eddine"
@@ -77,8 +77,8 @@ export default async function HomePage() {
                 />
               </div>
             ) : (
-              <div className="w-80 h-[400px] md:w-[550px] md:h-[450px] rounded-3xl bg-gradient-to-br from-[#bfac8e] to-[#bfac8e]/80 flex items-center justify-center border-4 border-[#bfac8e] shadow-2xl">
-                <span className="font-display text-7xl font-bold text-white opacity-60">N</span>
+              <div className="w-80 h-[400px] md:w-[550px] md:h-[450px] rounded-3xl bg-white flex items-center justify-center border-4 border-black/10 shadow-2xl">
+                <span className="font-display text-7xl font-bold text-black opacity-10">N</span>
               </div>
             )}
           </Reveal>
@@ -86,7 +86,7 @@ export default async function HomePage() {
       </section>
 
       {/* ── Stats ── */}
-      <section className="bg-white text-black py-20 px-6 border-y border-gray-100">
+      <section className="text-black py-20 px-6 border-y border-black/5">
         <Reveal type="fade">
           <div className="max-w-4xl mx-auto grid grid-cols-3 gap-8 text-center">
             {[
@@ -106,7 +106,7 @@ export default async function HomePage() {
       </section>
 
       {/* ── Services preview ── */}
-      <section className="py-24 px-6 bg-white">
+      <section className="py-24 px-6">
         <Reveal>
           <div className="max-w-6xl mx-auto">
             <h2 className="font-display text-4xl font-bold mb-4 text-center">{t.servicesTitle[lang]}</h2>
@@ -117,7 +117,7 @@ export default async function HomePage() {
                   <Reveal
                     delay={i * 0.1}
                     key={s.titleAr}
-                    className="bg-[#bfac8e] rounded-2xl p-8 border border-[#bfac8e] hover:shadow-xl transition-all hover:-translate-y-1"
+                    className="bg-white rounded-2xl p-8 border border-black/10 hover:shadow-xl transition-all hover:-translate-y-1"
                   >
                     <div className="text-4xl mb-5">🌐</div>
                     <h3 className="font-display text-xl font-semibold mb-3 text-black">
@@ -150,7 +150,7 @@ export default async function HomePage() {
                     type="zoom"
                     delay={i * 0.1}
                     key={s.title}
-                    className="bg-[#bfac8e] rounded-2xl p-8 border border-[#bfac8e] hover:shadow-xl transition-all hover:-translate-y-1"
+                    className="bg-white rounded-2xl p-8 border border-black/10 hover:shadow-xl transition-all hover:-translate-y-1"
                   >
                     <div className="text-4xl mb-5">{s.icon}</div>
                     <h3 className="font-display text-xl font-semibold mb-3 text-black">{s.title}</h3>
@@ -199,7 +199,7 @@ export default async function HomePage() {
       )}
 
       {/* ── Why Me ── */}
-      <section className="bg-white py-24 px-6">
+      <section className="py-24 px-6">
         <Reveal>
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="font-display text-4xl font-bold mb-6">{t.whyChooseMe[lang]}</h2>
@@ -212,7 +212,7 @@ export default async function HomePage() {
                 { icon: "⏱️", title: t.deadlineTitle[lang], desc: t.deadlineDesc[lang] },
                 { icon: "🔄", title: t.communicationTitle[lang], desc: t.communicationDesc[lang] },
               ].map((item, i) => (
-                <Reveal type="zoom" delay={i * 0.1} key={item.title} className="bg-[#bfac8e] rounded-2xl p-8 border border-[#bfac8e]">
+                <Reveal type="zoom" delay={i * 0.1} key={item.title} className="bg-white rounded-2xl p-8 border border-black/10 shadow-sm">
                   <div className="text-3xl mb-4">{item.icon}</div>
                   <h3 className="font-semibold text-lg mb-2 text-black">{item.title}</h3>
                   <p className="text-black/80 text-sm">{item.desc}</p>
@@ -224,7 +224,7 @@ export default async function HomePage() {
       </section>
 
       {/* ── CTA ── */}
-      <section className="bg-white text-black py-24 px-6 text-center border-t border-gray-100">
+      <section className="text-black py-24 px-6 text-center border-t border-black/5">
         <Reveal>
           <h2 className="font-display text-4xl md:text-5xl font-bold mb-6">
             {t.haveProjectInMind[lang]}

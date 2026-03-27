@@ -6,7 +6,7 @@ export default function Footer({ lang = 'ar', logoUrl }: { lang?: 'ar' | 'en' | 
   const t = dictionary;
 
   return (
-    <footer className="bg-white text-black py-16 px-6 border-t border-gray-100">
+    <footer className="bg-transparent text-black py-16 px-6 border-t border-black/5">
       <div className="max-w-6xl mx-auto">
         <div className="grid md:grid-cols-3 gap-10 mb-12">
           {/* Brand */}
