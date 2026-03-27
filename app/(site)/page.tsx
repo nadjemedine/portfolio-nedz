@@ -3,6 +3,8 @@ import { urlFor } from "@/lib/sanity";
 import Image from "next/image";
 import Link from "next/link";
 import Reveal from "@/components/Reveal";
+import StaggeredText from "@/components/StaggeredText";
+import ProjectCard from "@/components/ProjectCard";
 
 export const revalidate = 60;
 
@@ -38,12 +40,15 @@ export default async function HomePage() {
             <span className="inline-block text-xs tracking-widest text-[#bfac8e] uppercase mb-4 border border-[#bfac8e] px-3 py-1 rounded-full">
               {getLocalized(hero, "title") || t.developer[lang]}
             </span>
-            <h1 className="font-display text-5xl md:text-7xl font-bold leading-tight mb-6">
-              {(hero as any)?.name || "Nedjem Eddine"}
-            </h1>
-            <p className="text-lg text-black leading-relaxed mb-8 max-w-lg">
-              {getLocalized(hero, "bio") || t.bioFallback[lang]}
-            </p>
+            <StaggeredText
+              text={(hero as any)?.name || "Nedjem Eddine"}
+              className="font-display text-5xl md:text-7xl font-bold leading-tight mb-6"
+            />
+            <Reveal delay={0.4}>
+              <p className="text-lg text-black leading-relaxed mb-8 max-w-lg">
+                {getLocalized(hero, "bio") || t.bioFallback[lang]}
+              </p>
+            </Reveal>
             <div className="flex flex-wrap gap-4">
               <Link
                 href="/projects"
@@ -60,7 +65,7 @@ export default async function HomePage() {
             </div>
           </Reveal>
 
-          <Reveal delay={0.2} className="order-1 md:order-2 flex justify-center">
+          <Reveal type="blur" delay={0.2} className="order-1 md:order-2 flex justify-center">
             {(hero as any)?.image ? (
               <div className="relative w-80 h-[400px] md:w-[550px] md:h-[450px] rounded-3xl overflow-hidden border-4 border-[#bfac8e] shadow-2xl">
                 <Image
@@ -82,7 +87,7 @@ export default async function HomePage() {
 
       {/* ── Stats ── */}
       <section className="bg-white text-black py-20 px-6 border-y border-gray-100">
-        <Reveal>
+        <Reveal type="fade">
           <div className="max-w-4xl mx-auto grid grid-cols-3 gap-8 text-center">
             {[
               { value: (hero as any)?.yearsOfExperience ? `+${(hero as any).yearsOfExperience}` : "+5", label: t.experienceYears[lang] },
@@ -142,6 +147,7 @@ export default async function HomePage() {
                   },
                 ].map((s, i) => (
                   <Reveal
+                    type="zoom"
                     delay={i * 0.1}
                     key={s.title}
                     className="bg-[#bfac8e] rounded-2xl p-8 border border-[#bfac8e] hover:shadow-xl transition-all hover:-translate-y-1"
@@ -166,50 +172,17 @@ export default async function HomePage() {
                 {t.featuredProjectsTitle[lang]}
               </h2>
               <p className="text-center text-[#666] mb-14">{t.featuredProjectsSubtitle[lang]}</p>
-              <div className="grid md:grid-cols-3 gap-8">
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
                 {featured.map((project: any, i: number) => (
-                  <Reveal delay={i * 0.1} key={project._id}>
-                    <Link
-                      href={`/projects/${project.slug?.current}`}
-                      className="group block bg-[#bfac8e] rounded-2xl overflow-hidden border border-[#bfac8e] hover:shadow-xl transition-all hover:-translate-y-1"
-                    >
-                      {project.mainImage ? (
-                        <div className="relative h-52 overflow-hidden">
-                          <Image
-                            src={urlFor(project.mainImage).width(600).url()}
-                            alt={getLocalized(project, "title")}
-                            fill
-                            className="object-cover group-hover:scale-105 transition-transform duration-500"
-                          />
-                        </div>
-                      ) : (
-                        <div className="h-52 bg-gradient-to-br from-[#f2d9ac] to-[#c8883a] flex items-center justify-center">
-                          <span className="text-5xl">🖥️</span>
-                        </div>
-                      )}
-                      <div className="p-6">
-                        <span className="text-xs text-black uppercase tracking-wider font-semibold">
-                          {project.category}
-                        </span>
-                        <h3 className="font-display text-xl font-semibold mt-2 mb-3 text-black">
-                          {getLocalized(project, "title")}
-                        </h3>
-                        <p className="text-sm text-black/80 line-clamp-2">
-                          {getLocalized(project, "description")}
-                        </p>
-                        <div className="flex flex-wrap gap-2 mt-4">
-                          {project.technologies?.slice(0, 3).map((tech: string) => (
-                            <span
-                              key={tech}
-                              className="text-xs bg-white/20 border border-black/10 px-2 py-1 rounded-full text-black"
-                            >
-                              {tech}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                    </Link>
-                  </Reveal>
+                  <ProjectCard
+                    key={project._id}
+                    project={project}
+                    index={i}
+                    lang={lang}
+                    t={t}
+                    categories={[]} // passing empty array as category labels are not needed here if not used
+                    isMobileStack={true}
+                  />
                 ))}
               </div>
               <div className="text-center mt-12">
@@ -239,7 +212,7 @@ export default async function HomePage() {
                 { icon: "⏱️", title: t.deadlineTitle[lang], desc: t.deadlineDesc[lang] },
                 { icon: "🔄", title: t.communicationTitle[lang], desc: t.communicationDesc[lang] },
               ].map((item, i) => (
-                <Reveal delay={i * 0.1} key={item.title} className="bg-[#bfac8e] rounded-2xl p-8 border border-[#bfac8e]">
+                <Reveal type="zoom" delay={i * 0.1} key={item.title} className="bg-[#bfac8e] rounded-2xl p-8 border border-[#bfac8e]">
                   <div className="text-3xl mb-4">{item.icon}</div>
                   <h3 className="font-semibold text-lg mb-2 text-black">{item.title}</h3>
                   <p className="text-black/80 text-sm">{item.desc}</p>

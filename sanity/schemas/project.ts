@@ -36,9 +36,70 @@ export default defineType({
     }),
     defineField({
       name: 'technologies',
-      title: 'Technologies Used',
+      title: 'Technologies Used / التقنيات المستخدمة',
       type: 'array',
       of: [{ type: 'string' }],
+      options: {
+        list: [
+          // Languages
+          { title: 'HTML5', value: 'HTML' },
+          { title: 'CSS3', value: 'CSS' },
+          { title: 'JavaScript', value: 'JavaScript' },
+          { title: 'TypeScript', value: 'TypeScript' },
+          { title: 'PHP', value: 'PHP' },
+          { title: 'Python', value: 'Python' },
+          { title: 'Java', value: 'Java' },
+          { title: 'C#', value: 'C#' },
+          { title: 'Swift', value: 'Swift' },
+          { title: 'Kotlin', value: 'Kotlin' },
+          { title: 'Dart', value: 'Dart' },
+
+          // Frameworks / Libraries
+          { title: 'React', value: 'React' },
+          { title: 'Next.js', value: 'Next.js' },
+          { title: 'Vue.js', value: 'Vue.js' },
+          { title: 'Angular', value: 'Angular' },
+          { title: 'Node.js', value: 'Node.js' },
+          { title: 'Express', value: 'Express' },
+          { title: 'Laravel', value: 'Laravel' },
+          { title: 'Django', value: 'Django' },
+          { title: 'Spring Boot', value: 'Spring Boot' },
+          { title: 'Flutter', value: 'Flutter' },
+          { title: 'React Native', value: 'React Native' },
+          { title: 'Tailwind CSS', value: 'Tailwind CSS' },
+          { title: 'Bootstrap', value: 'Bootstrap' },
+
+          // Databases
+          { title: 'MySQL', value: 'MySQL' },
+          { title: 'PostgreSQL', value: 'PostgreSQL' },
+          { title: 'MongoDB', value: 'MongoDB' },
+          { title: 'Firebase', value: 'Firebase' },
+          { title: 'Supabase', value: 'Supabase' },
+          { title: 'Redis', value: 'Redis' },
+
+          // CMS & E-commerce
+          { title: 'Sanity', value: 'Sanity' },
+          { title: 'WordPress', value: 'WordPress' },
+          { title: 'Shopify', value: 'Shopify' },
+          { title: 'WooCommerce', value: 'WooCommerce' },
+          { title: 'Strapi', value: 'Strapi' },
+
+          // Tools & Control Panels
+          { title: 'cPanel', value: 'cPanel' },
+          { title: 'Plesk', value: 'Plesk' },
+          { title: 'CyberPanel', value: 'CyberPanel' },
+          { title: 'HestiaCP', value: 'HestiaCP' },
+          { title: 'DirectAdmin', value: 'DirectAdmin' },
+          { title: 'Docker', value: 'Docker' },
+          { title: 'NGINX', value: 'NGINX' },
+          { title: 'Apache', value: 'Apache' },
+          { title: 'Vercel', value: 'Vercel' },
+          { title: 'Netlify', value: 'Netlify' },
+          { title: 'AWS', value: 'AWS' },
+          { title: 'DigitalOcean', value: 'DigitalOcean' },
+        ],
+        layout: 'grid',
+      },
     }),
     defineField({
       name: 'category',
