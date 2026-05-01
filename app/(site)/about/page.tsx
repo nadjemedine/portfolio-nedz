@@ -36,7 +36,7 @@ export default async function AboutPage() {
               <div className="relative w-72 h-80 md:w-80 md:h-96 rounded-3xl overflow-hidden border-4 border-[#bfac8e] shadow-2xl">
                 <Image
                   src={urlFor(about.image).width(800).url()}
-                  alt="Nedjem Eddine"
+                  alt="Dev Online"
                   fill
                   className="object-cover"
                   priority
@@ -44,7 +44,7 @@ export default async function AboutPage() {
               </div>
             ) : (
               <div className="w-72 h-80 rounded-3xl bg-gradient-to-br from-[#bfac8e] to-[#bfac8e]/80 flex items-center justify-center border-4 border-[#bfac8e] shadow-2xl">
-                <span className="font-display text-8xl font-bold text-white opacity-60">N</span>
+                <span className="font-display text-8xl font-bold text-white opacity-60"> Dev Online </span>
               </div>
             )}
           </div>

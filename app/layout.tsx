@@ -22,10 +22,13 @@ export async function generateMetadata(): Promise<Metadata> {
 
   return {
     title: {
-      template: '%s | Nedjem Eddine',
-      default: settings?.siteNameEn || "Nedjem Eddine — Portfolio",
+      template: '%s | Dev Online',
+      default: settings?.siteNameEn || "Dev Online — Portfolio",
+      default: settings?.siteNameAr || "تطوير مواقع وتطبيقات",
+      default: settings?.siteNameFr || "Développeur de sites web et d'applications",
+      default: settings?.siteNameEn || "Dev Online — Portfolio",
     },
-    description: "Web Developer | مطور مواقع وتطبيقات",
+    description: "Web Developer | Developer of websites and applications",
     icons: {
       icon: faviconUrl,
       shortcut: faviconUrl,

@@ -1,4 +1,4 @@
-# Nedjem Eddine — Portfolio
+# Dev Online — Portfolio
 
 موقع بورتفوليو احترافي مبني بـ **Next.js 14** و **Sanity CMS**.
 
