@@ -20,13 +20,17 @@ export async function generateMetadata(): Promise<Metadata> {
   const settings = await getSiteSettings();
   const faviconUrl = settings?.favicon ? urlFor(settings.favicon).url() : "/favicon.ico";
 
+  const cookieStore = cookies();
+  const lang = cookieStore.get("NEXT_LOCALE")?.value || "ar";
+
+  let siteName = settings?.siteNameEn || "Dev Online — Portfolio";
+  if (lang === "ar") siteName = settings?.siteNameAr || "تطوير مواقع وتطبيقات";
+  else if (lang === "fr") siteName = settings?.siteNameFr || "Développeur de sites web et d'applications";
+
   return {
     title: {
-      template: '%s | Dev Online',
-      default: settings?.siteNameEn || "Dev Online — Portfolio",
-      default: settings?.siteNameAr || "تطوير مواقع وتطبيقات",
-      default: settings?.siteNameFr || "Développeur de sites web et d'applications",
-      default: settings?.siteNameEn || "Dev Online — Portfolio",
+      template: `%s | ${siteName}`,
+      default: siteName,
     },
     description: "Web Developer | Developer of websites and applications",
     icons: {
