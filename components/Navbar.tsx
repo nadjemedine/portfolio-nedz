@@ -10,10 +10,10 @@ type Lang = 'ar' | 'fr' | 'en';
 
 const navLinks = [
   { href: '/',         ar: 'الرئيسية', fr: 'Accueil',   en: 'Home'     },
-  { href: '/projects', ar: 'المشاريع', fr: 'Projets',   en: 'Projects' },
+  { href: '/projects', ar: 'مشاريعنا', fr: 'Nos Projets',   en: 'Our Projects' },
   { href: '/resume',   ar: 'السيرة الذاتية', fr: 'Resume',    en: 'Resume'   },
-  { href: '/about',    ar: 'حول',      fr: 'À propos',  en: 'About'    },
-  { href: '/contact',  ar: 'تواصل',    fr: 'Contact',   en: 'Contact'  },
+  { href: '/about',    ar: 'حولنا',      fr: 'À notre sujet',  en: 'About Us'    },
+  { href: '/contact',  ar: 'تواصل معنا',    fr: 'Contactez-nous',   en: 'Contact Us'  },
 ];
 
 export default function Navbar({ initialLang = 'ar', logoUrl, hideResume }: { initialLang?: string, logoUrl: string, hideResume?: boolean }) {
@@ -37,12 +37,12 @@ export default function Navbar({ initialLang = 'ar', logoUrl, hideResume }: { in
     href === '/' ? pathname === '/' : pathname.startsWith(href);
 
   return (
-    <nav className="fixed top-0 w-full z-50 bg-gray-100/95 backdrop-blur-sm border-b border-black/5">
+    <nav className="fixed top-0 w-full z-50 bg-white/95 backdrop-blur-sm border-b border-black/10">
       <div className="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
         {/* Logo */}
-        <Link href="/" className="relative flex items-center w-[100px]">
+        <Link href="/" className="relative flex items-center w-[150px] md:w-[180px]">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={logoUrl} alt="Nedjem Eddine" className="w-full h-auto object-contain" />
+          <img src={logoUrl} alt="Developpement Online" className="w-full h-auto object-contain" />
         </Link>
 
         {/* Desktop Nav */}
@@ -52,7 +52,7 @@ export default function Navbar({ initialLang = 'ar', logoUrl, hideResume }: { in
               key={link.href}
               href={link.href}
               className={`text-sm font-medium transition-colors relative group py-2 ${
-                isActive(link.href) ? 'text-[#bfac8e]' : 'text-black hover:text-[#bfac8e]'
+                isActive(link.href) ? 'text-[#bfac8e]' : 'text-[#bfac8e] hover:text-white'
               }`}
             >
               {link[lang]}
@@ -79,7 +79,7 @@ export default function Navbar({ initialLang = 'ar', logoUrl, hideResume }: { in
 
           {/* Mobile Burger */}
           <button
-            className="md:hidden text-xl p-2 h-10 w-10 flex items-center justify-center rounded-full hover:bg-black/5 transition-colors"
+            className="md:hidden text-[#bfac8e] text-xl p-2 h-10 w-10 flex items-center justify-center rounded-full hover:bg-white/10 transition-colors"
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label="Toggle menu"
           >
@@ -95,7 +95,7 @@ export default function Navbar({ initialLang = 'ar', logoUrl, hideResume }: { in
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-gray-100 border-t border-[#bfac8e] overflow-hidden"
+            className="md:hidden bg-[#3a3d35] border-t border-white/5 overflow-hidden"
           >
             <div className="px-6 py-6 space-y-4">
               {filteredLinks.map((link, i) => (
@@ -105,13 +105,13 @@ export default function Navbar({ initialLang = 'ar', logoUrl, hideResume }: { in
                   transition={{ delay: i * 0.05 }}
                   key={link.href}
                 >
-                  <Link
-                    href={link.href}
-                    onClick={() => setMobileOpen(false)}
-                    className={`block text-lg font-medium py-2 transition-colors ${
-                      isActive(link.href) ? 'text-[#bfac8e]' : 'text-black'
-                    }`}
-                  >
+                    <Link
+                      href={link.href}
+                      onClick={() => setMobileOpen(false)}
+                      className={`block text-lg font-medium py-2 transition-colors ${
+                        isActive(link.href) ? 'text-[#bfac8e]' : 'text-[#bfac8e]'
+                      }`}
+                    >
                     {link[lang]}
                   </Link>
                 </motion.div>

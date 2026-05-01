@@ -3,23 +3,23 @@
 @tailwind utilities;
 
 :root {
-  --background: #f3f4f6;
-  --text: #000000;
-  --accent: #bfac8e;
-  --card: #bfac8e;
-  --button: #bfac8e;
+  --background: #000000;
+  --text: #ffffff;
+  --accent: #ffffff;
+  --card: #ffffff;
+  --button: #ffffff;
   --black: #000000;
   --white: #ffffff;
-  --beige: #f3f4f6;
-  --beige-2: #bfac8e;
+  --beige: #000000;
+  --beige-2: #ffffff;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
 
 body {
-  background: var(--beige);
-  color: var(--black);
+  background: var(--background);
+  color: var(--text);
   font-family: var(--font-body), sans-serif;
 }
 

@@ -48,7 +48,7 @@ export default function RootLayout({
   return (
     <html lang={lang} dir={dir}>
       <body
-        className={`${amiriDisplay.variable} ${amiri.variable} bg-white text-black font-body`}
+        className={`${amiriDisplay.variable} ${amiri.variable} font-body bg-[#3a3d35] text-white`}
       >
         {children}
       </body>

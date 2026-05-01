@@ -4,14 +4,14 @@ export const dictionary = {
   about: { ar: 'حول', en: 'About me', fr: 'À propos' },
   contact: { ar: 'تواصل', en: 'Contact', fr: 'Contact' },
   developer: {
-    ar: 'مطور مواقع وتطبيقات ويب',
-    en: 'Web Developer & App Developer',
-    fr: 'Développeur Web & d\'Applications'
+    ar: 'فريق تطوير رقمي متخصص',
+    en: 'Specialized Digital Development Team',
+    fr: 'Équipe spécialisée en développement numérique'
   },
   bioFallback: {
-    ar: 'مطور متخصص في بناء مواقع وتطبيقات ويب، أسعى دائماً لتقديم حلول رقمية بجودة عالية وتجربة مستخدم استثنائية.',
-    en: 'Specialized developer in building web sites and apps, always striving to deliver high-quality digital solutions and exceptional user experience.',
-    fr: 'Développeur spécialisé dans la création de sites et d\'applications web, s\'efforçant toujours de fournir des solutions numériques de haute qualité et une expérience utilisateur exceptionnelle.'
+    ar: 'فريق متخصص في تطوير الحلول الرقمية المتكاملة، نقدم خدمات تصميم وتطوير المواقع والتطبيقات الإلكترونية مع الالتزام بالجودة والمواعيد.',
+    en: 'A specialized team in integrated digital solutions, offering website and application development services with commitment to quality and deadlines.',
+    fr: 'Une équipe spécialisée dans les solutions numériques intégrées, offrant des services de conception et de développement de sites web et d\'applications avec un engagement sur la qualité et les délais.'
   },
   myProjects: { ar: 'مشاريعي', en: 'My Projects', fr: 'Mes Projets' },
   contactMe: { ar: 'تواصل معي', en: 'Contact Me', fr: 'Contactez-moi' },
@@ -83,7 +83,7 @@ export const dictionary = {
   availableForNewProjects: { ar: 'متاح للمشاريع الجديدة ✓', en: 'Available for new projects ✓', fr: 'Disponible pour de nouveaux projets ✓' },
   experience: { ar: 'الخبرة العملية', en: 'Work Experience', fr: 'Expérience Professionnelle' },
   education: { ar: 'التعليم والشهادات', en: 'Education & Certifications', fr: 'Éducation & Certifications' },
-  helloIAm: { ar: 'مرحباً، أنا نجم الدين', en: 'Hello, I am Nedjem Eddine', fr: 'Bonjour, je suis Nedjem Eddine' },
+  helloIAm: { ar: 'مرحباً، أنا فريق تطوير أونلاين', en: 'Hello, I am Developpement Online', fr: 'Bonjour, je suis Developpement Online' },
   arabic: { ar: 'العربية', en: 'Arabic', fr: 'Arabe' },
   french: { ar: 'الفرنسية', en: 'French', fr: 'Français' },
   english: { ar: 'الإنجليزية', en: 'English', fr: 'Anglais' },

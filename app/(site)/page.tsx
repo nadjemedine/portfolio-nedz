@@ -5,6 +5,7 @@ import Link from "next/link";
 import Reveal from "@/components/Reveal";
 import StaggeredText from "@/components/StaggeredText";
 import ProjectCard from "@/components/ProjectCard";
+import TechMarquee from "@/components/TechMarquee";
 
 export const revalidate = 60;
 
@@ -36,57 +37,70 @@ export default async function HomePage() {
       {/* ── Hero ── */}
       <section className="min-h-screen flex items-center px-6">
         <div className="max-w-6xl mx-auto w-full grid md:grid-cols-2 gap-16 items-center py-24">
-          <Reveal className="order-2 md:order-1">
-            <span className="inline-block text-xs tracking-widest text-[#bfac8e] uppercase mb-4 border border-[#bfac8e] px-3 py-1 rounded-full">
-              {getLocalized(hero, "title") || t.developer[lang]}
-            </span>
-            <StaggeredText
-              text={(hero as any)?.name || "Nedjem Eddine"}
-              className="font-display text-5xl md:text-7xl font-bold leading-tight mb-6"
-            />
-            <Reveal delay={0.4}>
-              <p className="text-lg text-black leading-relaxed mb-8 max-w-lg">
+          <div className="order-2 md:order-1 flex flex-col items-start gap-4">
+            <Reveal type="slideDown" delay={0.1}>
+              <span className="inline-block text-xs font-bold tracking-widest text-black bg-[#bfac8e] uppercase mb-2 px-6 py-2 rounded-full shadow-lg">
+                {getLocalized(hero, "title") || t.developer[lang]}
+              </span>
+            </Reveal>
+
+            <Reveal type="skew" delay={0.3}>
+              <h1 className="font-display text-6xl md:text-8xl font-black leading-tight text-white mb-4">
+                {(hero as any)?.name || "Dev Online"}
+              </h1>
+            </Reveal>
+
+            <Reveal type="blur" delay={0.5}>
+              <p className="text-lg md:text-xl text-white/80 leading-relaxed max-w-lg mb-8 font-medium">
                 {getLocalized(hero, "bio") || t.bioFallback[lang]}
               </p>
             </Reveal>
+
             <div className="flex flex-wrap gap-4">
-              <Link
-                href="/projects"
-                className="bg-[#bfac8e] text-black px-8 py-3 rounded-full hover:bg-black hover:text-white transition-colors font-medium"
-              >
-                {t.myProjects[lang]}
-              </Link>
-              <Link
-                href="/contact"
-                className="border-2 border-black px-8 py-3 rounded-full hover:bg-[#bfac8e] hover:text-black transition-colors font-medium"
-              >
-                {t.contactMe[lang]}
-              </Link>
+              <Reveal type="bounce" delay={0.7}>
+                <Link
+                  href="/projects"
+                  className="bg-[#bfac8e] text-black px-10 py-4 rounded-full hover:bg-white hover:scale-105 active:scale-95 transition-all font-black"
+                >
+                  {lang === 'ar' ? 'مشاريعنا' : lang === 'fr' ? 'Nos Projets' : 'Our Projects'}
+                </Link>
+              </Reveal>
+              <Reveal type="bounce" delay={0.8}>
+                <Link
+                  href="/contact"
+                  className="border-2 border-white/20 text-white px-10 py-4 rounded-full hover:border-[#bfac8e] hover:bg-[#bfac8e]/10 hover:scale-105 active:scale-95 transition-all font-black"
+                >
+                  {lang === 'ar' ? 'تواصل معنا' : lang === 'fr' ? 'Contactez-nous' : 'Contact Us'}
+                </Link>
+              </Reveal>
             </div>
-          </Reveal>
+          </div>
 
           <Reveal type="blur" delay={0.2} className="order-1 md:order-2 flex justify-center">
             {(hero as any)?.image ? (
-              <div className="relative w-80 h-[400px] md:w-[550px] md:h-[450px] rounded-3xl overflow-hidden border-4 border-black/10 shadow-2xl">
+              <div className="relative w-full max-w-3xl h-auto aspect-square md:aspect-video rounded-3xl overflow-hidden border-4 border-black/10 shadow-2xl">
                 <Image
                   src={urlFor((hero as any).image).width(1000).url()}
-                  alt="Nedjem Eddine"
+                  alt="Developpement Online"
                   fill
-                  className="object-cover"
+                  className="object-contain"
                   priority
                 />
               </div>
             ) : (
-              <div className="w-80 h-[400px] md:w-[550px] md:h-[450px] rounded-3xl bg-white flex items-center justify-center border-4 border-black/10 shadow-2xl">
-                <span className="font-display text-7xl font-bold text-black opacity-10">N</span>
+              <div className="w-full max-w-3xl h-auto aspect-square md:aspect-video rounded-3xl bg-white flex items-center justify-center border-4 border-black/10 shadow-2xl">
+                <span className="font-display text-7xl font-bold text-black opacity-10">D</span>
               </div>
             )}
           </Reveal>
         </div>
       </section>
 
+      {/* ── Tech Marquee ── */}
+      <TechMarquee />
+
       {/* ── Stats ── */}
-      <section className="text-black py-20 px-6 border-y border-black/5">
+      <section className="text-white py-20 px-6 border-y border-white/5">
         <Reveal type="fade">
           <div className="max-w-4xl mx-auto grid grid-cols-3 gap-8 text-center">
             {[
@@ -98,7 +112,7 @@ export default async function HomePage() {
                 <div className="font-display text-5xl md:text-6xl font-bold text-[#bfac8e] mb-2">
                   {s.value}
                 </div>
-                <div className="text-sm text-black/60 tracking-wide">{s.label}</div>
+                <div className="text-sm text-white/60 tracking-wide">{s.label}</div>
               </div>
             ))}
           </div>
@@ -114,19 +128,19 @@ export default async function HomePage() {
             <div className="grid md:grid-cols-3 gap-8">
               {(about as any)?.services?.length > 0 ? (
                 (about as any).services.slice(0, 3).map((s: any, i: number) => (
-                  <Reveal
-                    delay={i * 0.1}
-                    key={s.titleAr}
-                    className="bg-white rounded-2xl p-8 border border-black/10 hover:shadow-xl transition-all hover:-translate-y-1"
-                  >
-                    <div className="text-4xl mb-5">🌐</div>
-                    <h3 className="font-display text-xl font-semibold mb-3 text-black">
-                      {getLocalized(s, "title")}
-                    </h3>
-                    <p className="text-black/80 text-sm leading-relaxed">
-                      {getLocalized(s, "description")}
-                    </p>
-                  </Reveal>
+                    <Reveal
+                      delay={i * 0.1}
+                      key={s.titleAr}
+                      className="bg-[#bfac8e] rounded-2xl p-8 hover:shadow-xl transition-all hover:-translate-y-1"
+                    >
+                      <div className="text-4xl mb-5">🌐</div>
+                      <h3 className="font-display text-xl font-bold mb-3 text-black">
+                        {getLocalized(s, "title")}
+                      </h3>
+                      <p className="text-black/80 text-sm leading-relaxed font-medium">
+                        {getLocalized(s, "description")}
+                      </p>
+                    </Reveal>
                 ))
               ) : (
                 [
@@ -150,11 +164,11 @@ export default async function HomePage() {
                     type="zoom"
                     delay={i * 0.1}
                     key={s.title}
-                    className="bg-white rounded-2xl p-8 border border-black/10 hover:shadow-xl transition-all hover:-translate-y-1"
+                    className="bg-[#bfac8e] rounded-2xl p-8 hover:shadow-xl transition-all hover:-translate-y-1"
                   >
                     <div className="text-4xl mb-5">{s.icon}</div>
-                    <h3 className="font-display text-xl font-semibold mb-3 text-black">{s.title}</h3>
-                    <p className="text-black/80 text-sm leading-relaxed">{s.desc}</p>
+                    <h3 className="font-display text-xl font-bold mb-3 text-black">{s.title}</h3>
+                    <p className="text-black/80 text-sm leading-relaxed font-medium">{s.desc}</p>
                   </Reveal>
                 ))
               )}
@@ -188,7 +202,7 @@ export default async function HomePage() {
               <div className="text-center mt-12">
                 <Link
                   href="/projects"
-                  className="border-2 border-black px-10 py-3 rounded-full hover:bg-black hover:text-white transition-colors font-medium"
+                  className="border-2 border-white text-white px-10 py-3 rounded-full hover:bg-white hover:text-black transition-colors font-medium"
                 >
                   {t.viewAllProjects[lang]}
                 </Link>
@@ -203,7 +217,7 @@ export default async function HomePage() {
         <Reveal>
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="font-display text-4xl font-bold mb-6">{t.whyChooseMe[lang]}</h2>
-            <p className="text-lg text-black leading-relaxed max-w-2xl mx-auto">
+            <p className="text-lg text-white leading-relaxed max-w-2xl mx-auto">
               {getLocalized(about, "whyMe") || t.whyMeFallback[lang]}
             </p>
             <div className="grid md:grid-cols-3 gap-8 mt-14">
@@ -212,10 +226,10 @@ export default async function HomePage() {
                 { icon: "⏱️", title: t.deadlineTitle[lang], desc: t.deadlineDesc[lang] },
                 { icon: "🔄", title: t.communicationTitle[lang], desc: t.communicationDesc[lang] },
               ].map((item, i) => (
-                <Reveal type="zoom" delay={i * 0.1} key={item.title} className="bg-white rounded-2xl p-8 border border-black/10 shadow-sm">
+                <Reveal type="zoom" delay={i * 0.1} key={item.title} className="bg-[#bfac8e] rounded-2xl p-8 hover:shadow-xl transition-all hover:-translate-y-1">
                   <div className="text-3xl mb-4">{item.icon}</div>
-                  <h3 className="font-semibold text-lg mb-2 text-black">{item.title}</h3>
-                  <p className="text-black/80 text-sm">{item.desc}</p>
+                  <h3 className="font-bold text-lg mb-2 text-black">{item.title}</h3>
+                  <p className="text-black/80 font-medium text-sm">{item.desc}</p>
                 </Reveal>
               ))}
             </div>
@@ -224,17 +238,17 @@ export default async function HomePage() {
       </section>
 
       {/* ── CTA ── */}
-      <section className="text-black py-24 px-6 text-center border-t border-black/5">
+      <section className="text-white py-24 px-6 text-center border-t border-white/5">
         <Reveal>
           <h2 className="font-display text-4xl md:text-5xl font-bold mb-6">
             {t.haveProjectInMind[lang]}
           </h2>
-          <p className="text-black/60 mb-10 text-lg max-w-xl mx-auto">
+          <p className="text-white/60 mb-10 text-lg max-w-xl mx-auto">
             {t.translateIdea[lang]}
           </p>
           <Link
             href="/contact"
-            className="bg-[#bfac8e] text-black px-12 py-4 rounded-full text-lg font-semibold hover:bg-black hover:text-white transition-colors"
+            className="bg-[#bfac8e] text-black px-12 py-4 rounded-full text-lg font-semibold hover:bg-white hover:text-black transition-colors"
           >
             {t.startProjectNow[lang]}
           </Link>

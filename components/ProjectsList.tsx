@@ -20,15 +20,15 @@ export default function ProjectsList({ initialProjects, categories, t, lang }: P
   return (
     <div className="space-y-12">
       {/* Filter Tabs */}
-      <div className="flex flex-wrap justify-center gap-3 sticky top-24 z-30 bg-white/90 backdrop-blur-md py-2 px-4 rounded-full border border-gray-200 shadow-sm">
+      <div className="flex flex-wrap justify-center gap-3 relative py-2 px-4 rounded-full border border-white/5">
         {[{ value: "all", label: t.all[lang] }, ...categories.slice(1)].map((cat) => (
           <button
             key={cat.value}
             onClick={() => setFilter(cat.value)}
             className={`px-6 py-2.5 rounded-full text-sm font-medium transition-all transform active:scale-95 ${
               filter === cat.value
-                ? "bg-black text-white shadow-lg scale-105"
-                : "bg-[#bfac8e]/20 text-black hover:bg-[#bfac8e]/40"
+                ? "bg-[#bfac8e] text-black shadow-lg scale-105"
+                : "bg-white/5 text-white/60 hover:bg-white/10 hover:text-white"
             }`}
           >
             {cat.label}
@@ -43,8 +43,8 @@ export default function ProjectsList({ initialProjects, categories, t, lang }: P
           animate={{ opacity: 1 }}
           className="text-center py-24"
         >
-          <div className="text-6xl mb-6 text-black/20 font-black">∅</div>
-          <h3 className="font-display text-2xl font-semibold mb-3">{t.noProjects[lang]}</h3>
+          <div className="text-6xl mb-6 text-white/10 font-black">∅</div>
+          <h3 className="font-display text-2xl font-semibold mb-3 text-white">{t.noProjects[lang]}</h3>
         </motion.div>
       ) : (
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
@@ -57,7 +57,7 @@ export default function ProjectsList({ initialProjects, categories, t, lang }: P
                 lang={lang}
                 t={t}
                 categories={categories}
-                isMobileStack={filter === "all"} // Only stack when showing all to avoid layout jumping when filtering
+                isMobileStack={false}
               />
             ))}
           </AnimatePresence>

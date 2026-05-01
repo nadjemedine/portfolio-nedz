@@ -26,7 +26,7 @@ export default async function ProjectsPage() {
         {/* Header */}
         <div className="text-center mb-16">
           <h1 className="font-display text-5xl md:text-6xl font-bold mb-4">{t.projectsHeaderTitle[lang]}</h1>
-          <p className="text-black/60 text-lg max-w-xl mx-auto">
+          <p className="text-white/60 text-lg max-w-xl mx-auto">
             {t.projectsHeaderSubtitle[lang]}
           </p>
         </div>
