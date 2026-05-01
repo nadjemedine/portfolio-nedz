@@ -3,19 +3,25 @@ import Image from 'next/image';
 interface ProjectGalleryProps {
   images: string[];
   titles?: string[];
+  translations?: {
+    gallery?: string;
+    clickToEnlarge?: string;
+    close?: string;
+  };
   displayMode?: 'grid' | 'carousel';
 }
 
 export default function ProjectGallery({ 
   images, 
   titles = [], 
+  translations,
   displayMode = 'grid' 
 }: ProjectGalleryProps) {
   if (images.length === 0) return null;
 
   return (
     <div className="mt-8">
-      <h3 className="font-display text-xl font-bold mb-4 text-black">Project Gallery</h3>
+      <h3 className="font-display text-xl font-bold mb-4 text-black">{translations?.gallery || 'Project Gallery'}</h3>
       {displayMode === 'grid' ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {images.map((img, index) => (

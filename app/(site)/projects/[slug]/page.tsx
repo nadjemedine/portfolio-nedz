@@ -115,7 +115,7 @@ export default async function ProjectDetailPage({
         {/* Gallery */}
         <RevealAnimation type={animationType} delay={0.4}>
           <div className="mb-24">
-             <ProjectGallery images={allImages} titles={galleryTitles} displayMode={displayMode} />
+             <ProjectGallery images={allImages} translations={galleryTitles} displayMode={displayMode} />
           </div>
         </RevealAnimation>
 
