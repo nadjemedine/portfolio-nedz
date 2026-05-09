@@ -7,8 +7,8 @@ export async function POST(req: Request) {
   try {
     const { fullName, phone, email, serviceType, description } = await req.json();
 
-    const data = await resend.emails.send({
-      from: 'Portfolio Contact <onboarding@resend.dev>',
+    const { data, error } = await resend.emails.send({
+      from: 'Portfolio Contact <contact@developpement.online>',
       to: process.env.CONTACT_EMAIL || 'ouassimtahi@gmail.com',
       subject: `طلب مشروع جديد: ${serviceType}`,
       html: `
@@ -22,8 +22,14 @@ export async function POST(req: Request) {
       `,
     });
 
+    if (error) {
+      console.error('Resend Error:', error);
+      return NextResponse.json({ success: false, error }, { status: 400 });
+    }
+
     return NextResponse.json({ success: true, data });
   } catch (error) {
+    console.error('Error sending email:', error);
     return NextResponse.json({ success: false, error }, { status: 500 });
   }
 }

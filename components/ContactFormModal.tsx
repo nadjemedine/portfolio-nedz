@@ -3,59 +3,19 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { dictionary } from '@/lib/dictionary';
 
+import ContactForm from './ContactForm';
+
 type Lang = 'ar' | 'fr' | 'en';
 
 export default function ContactFormModal({ lang }: { lang: Lang }) {
   const [isOpen, setIsOpen] = useState(false);
   const [isSent, setIsSent] = useState(false);
-  const [loading, setLoading] = useState(false);
   const t = dictionary;
-
-  const [formData, setFormData] = useState({
-    fullName: '',
-    phone: '',
-    email: '',
-    serviceType: t.websiteDesign[lang],
-    description: ''
-  });
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-    
-    try {
-      const res = await fetch('/api/send-email', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-
-      if (res.ok) {
-        setIsSent(true);
-      } else {
-        alert('حدث خطأ أثناء الإرسال. يرجى المحاولة لاحقاً.');
-      }
-    } catch (error) {
-      console.error(error);
-      alert('حدث خطأ في الشبكة.');
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const closeModal = () => {
     setIsOpen(false);
     setTimeout(() => {
       setIsSent(false);
-      setFormData({
-        fullName: '',
-        phone: '',
-        email: '',
-        serviceType: t.websiteDesign[lang],
-        description: ''
-      });
     }, 300);
   };
 
@@ -97,83 +57,14 @@ export default function ContactFormModal({ lang }: { lang: Lang }) {
 
               {!isSent ? (
                 <>
-                  <h3 className="font-display text-3xl font-bold mb-2">
+                  <h3 className="font-display text-3xl font-bold mb-2 text-center">
                     {t.contactHeaderTitle[lang]}
                   </h3>
-                  <p className="text-black/60 mb-8">
+                  <p className="text-black/60 mb-8 text-center">
                     {t.contactCardSubtitle[lang]}
                   </p>
 
-                  <form onSubmit={handleSubmit} className="space-y-5 text-start">
-                    <div>
-                      <label className="block text-sm font-medium mb-2 text-black/60">{t.name[lang]}</label>
-                      <input
-                        required
-                        type="text"
-                        value={formData.fullName}
-                        onChange={(e) => setFormData({...formData, fullName: e.target.value})}
-                        className="w-full bg-gray-50 border border-black/10 rounded-xl px-4 py-3 text-black focus:outline-none focus:border-[#bfac8e] transition-colors"
-                        placeholder="John Doe"
-                      />
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-medium mb-2 text-black/60">{t.phoneLabel[lang]}</label>
-                      <input
-                        required
-                        type="tel"
-                        value={formData.phone}
-                        onChange={(e) => setFormData({...formData, phone: e.target.value})}
-                        className="w-full bg-gray-50 border border-black/10 rounded-xl px-4 py-3 text-black focus:outline-none focus:border-[#bfac8e] transition-colors"
-                        placeholder="+213..."
-                      />
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-medium mb-1 text-black/60">{t.email[lang]}</label>
-                      <input
-                        required
-                        type="email"
-                        value={formData.email}
-                        onChange={(e) => setFormData({...formData, email: e.target.value})}
-                        className="w-full bg-gray-50 border border-black/10 rounded-xl px-4 py-3 text-black focus:outline-none focus:border-[#bfac8e] transition-colors"
-                        placeholder="example@mail.com"
-                      />
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-medium mb-1 text-black/60">{t.serviceType[lang]}</label>
-                      <select 
-                        value={formData.serviceType}
-                        onChange={(e) => setFormData({...formData, serviceType: e.target.value})}
-                        className="w-full bg-gray-50 border border-black/10 rounded-xl px-4 py-3 text-black focus:outline-none focus:border-[#bfac8e] transition-colors appearance-none"
-                      >
-                        <option>{t.websiteDesign[lang]}</option>
-                        <option>{t.webappDev[lang]}</option>
-                        <option>{t.mobileApp[lang]}</option>
-                        <option>{t.other[lang]}</option>
-                      </select>
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-medium mb-1 text-black/60">{t.shortDescription[lang]}</label>
-                      <textarea
-                        required
-                        rows={3}
-                        value={formData.description}
-                        onChange={(e) => setFormData({...formData, description: e.target.value})}
-                        className="w-full bg-gray-50 border border-black/10 rounded-xl px-4 py-3 text-black focus:outline-none focus:border-[#bfac8e] transition-colors resize-none"
-                      />
-                    </div>
-
-                    <button
-                      disabled={loading}
-                      type="submit"
-                      className="w-full bg-black text-white font-bold py-4 rounded-xl hover:bg-black/90 transition-all disabled:opacity-50 mt-4"
-                    >
-                      {loading ? t.sending[lang] : t.send[lang]}
-                    </button>
-                  </form>
+                  <ContactForm lang={lang} />
                 </>
               ) : (
                 <div className="text-center py-10">

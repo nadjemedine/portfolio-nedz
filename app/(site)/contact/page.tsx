@@ -4,7 +4,7 @@ export const revalidate = 60;
 
 import { cookies } from "next/headers";
 import { dictionary } from "@/lib/dictionary";
-import ContactFormModal from "@/components/ContactFormModal";
+import ContactForm from "@/components/ContactForm";
 
 export default async function ContactPage() {
   const cookieStore = cookies();
@@ -93,15 +93,22 @@ export default async function ContactPage() {
           )}
         </div>
 
-        {/* CTA Box */}
-        <div className="bg-[#bfac8e] text-black rounded-3xl p-12 text-center">
-          <h2 className="font-display text-3xl font-bold mb-4">
-            {t.contactCardSubtitle[lang]}
-          </h2>
-          <p className="text-black/60 mb-8 max-w-lg mx-auto">
-            {t.translateIdea[lang]}
-          </p>
-          <ContactFormModal lang={lang} />
+        {/* CTA Box / Contact Form */}
+        <div id="contact-form" className="bg-[#bfac8e] text-black rounded-3xl p-8 md:p-12 shadow-2xl">
+          <div className="max-w-2xl mx-auto">
+            <div className="text-center mb-10">
+              <h2 className="font-display text-4xl font-bold mb-4">
+                {t.contactHeaderTitle[lang]}
+              </h2>
+              <p className="text-black/60 text-lg">
+                {t.contactCardSubtitle[lang]}
+              </p>
+            </div>
+            
+            <div className="bg-white/50 backdrop-blur-sm p-6 md:p-10 rounded-2xl border border-black/5 shadow-inner">
+              <ContactForm lang={lang} />
+            </div>
+          </div>
         </div>
 
         {/* Location */}
